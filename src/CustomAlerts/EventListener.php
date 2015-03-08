@@ -121,7 +121,7 @@ class EventListener extends PluginBase implements Listener{
     		if($player instanceof Player){
     			$origin = $event->getOrigin();
     			$target = $event->getTarget();
-    			Server::getInstance()->broadcastMessage($this->plugin->getWorldChangeMessage($player, $origin, $target));
+    			$this->getServer()->broadcastMessage($this->plugin->getWorldChangeMessage($player, $origin, $target));
     		}
     	}
     }
