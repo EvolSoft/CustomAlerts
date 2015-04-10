@@ -32,6 +32,8 @@ With CustomAlerts you can customize or hide join/leave messages, first join mess
 
 ## Documentation
 
+**Text format (Available on PocketMine console and on MCPE v0.11.0 and later):**
+
 **Colors:**
 
 Black ("&0");<br>
