@@ -17,6 +17,9 @@ permissions:
     default: op
     description: CustomAlerts permissions.
     children:
+      customalerts.extensions:
+        default: op
+        description: CustomAlerts command Extensions permission.
       customalerts.help:
         default: op
         description: CustomAlerts command Help permission.
