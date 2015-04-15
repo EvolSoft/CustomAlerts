@@ -1,0 +1,9 @@
+name: CustomAlertsExample
+main: CustomAlertsExample\Example
+version: 1
+api: [1.11.0]
+depend: [CustomAlerts]
+load: STARTUP
+author: EvolSoft
+description: CustomAlertsAPI implementation example 
+website: http://www.evolsoft.tk
