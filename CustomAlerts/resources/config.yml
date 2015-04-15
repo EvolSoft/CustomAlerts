@@ -1,0 +1,28 @@
+---
+datetime-format: "H:i:s"
+FirstJoin:
+  enable: true
+  message: "&2[{TIME}] &a{PLAYER}&d joined the game for the first time."
+Join:
+  hide: false
+  custom: true
+  message: "&2[{TIME}] &a{PLAYER}&e joined the game."
+Quit:
+  hide: true
+  custom: false
+  message: "&4[{TIME}] &c{PLAYER}&e has left the game"
+Death:
+  hide: false
+  custom: true
+  kill-message: "&9{PLAYER} &ewas killed by &c{KILLER}"
+  death-default-message: "&c{PLAYER} died"
+  death-suffocation-message: "&c{PLAYER} suffocated"
+  death-fall-message: "&c{PLAYER} fell from a high place"
+  death-fire-message: "&c{PLAYER} went up in flames"
+  death-lava-message: "&c{PLAYER} tried to swim in lava"
+  death-drowning-message: "&c{PLAYER} drowned"
+  death-explosion-message: "&c{PLAYER} exploded"
+WorldChange:
+  enable: true
+  message: "&2[{TIME}] &a{PLAYER}&e moved from &c{ORIGIN}&e to &a{TARGET}"
+...
