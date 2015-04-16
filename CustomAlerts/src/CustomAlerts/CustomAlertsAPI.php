@@ -4,7 +4,7 @@
  * CustomAlerts (v1.2) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 16/04/2015 04:04 PM (UTC)
+ * Date: 16/04/2015 04:09 PM (UTC)
  * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -13,6 +13,7 @@ namespace CustomAlerts;
 
 use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
+use pocketmine\entity\Living;
 use pocketmine\event\entity\EntityDamageByBlockEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\level\Level;
