@@ -4,7 +4,7 @@
  * CustomAlerts (v1.2) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 15/04/2015 11:04 AM (UTC)
+ * Date: 16/04/2015 04:04 PM (UTC)
  * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -13,7 +13,6 @@ namespace CustomAlerts;
 
 use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
-use pocketmine\entity\Living;
 use pocketmine\event\entity\EntityDamageByBlockEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\level\Level;
@@ -227,7 +226,7 @@ class CustomAlertsAPI extends PluginBase {
     }
 
     /**
-     * Get Default first join message
+     * Get default first join message
      * 
      * @param Player $player
      * 
@@ -314,7 +313,7 @@ class CustomAlertsAPI extends PluginBase {
     }
     
     /**
-     * Set join message
+     * Set current join message
      * 
      * @param string $message The message
      */
@@ -369,7 +368,7 @@ class CustomAlertsAPI extends PluginBase {
     }
     
     /**
-     * Set quit message
+     * Set current quit message
      * 
      * @param string $message The message
      */
@@ -418,7 +417,7 @@ class CustomAlertsAPI extends PluginBase {
     }
     
     /**
-     * Set world change message
+     * Set current world change message
      *
      * @param string $message The message
      */
@@ -443,7 +442,7 @@ class CustomAlertsAPI extends PluginBase {
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_PROJECTILE){
         		return $cfg["Death"]["death-projectile-message"]["custom"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_SUFFOCATION){
-        		return $cfg["Death"]["death-projectile-message"]["custom"];
+        		return $cfg["Death"]["death-suffocation-message"]["custom"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FALL){
         		return $cfg["Death"]["death-fall-message"]["custom"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FIRE){
@@ -454,7 +453,7 @@ class CustomAlertsAPI extends PluginBase {
         		return $cfg["Death"]["death-lava-message"]["custom"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_DROWNING){
         		return $cfg["Death"]["death-drowning-message"]["custom"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_ENTITY_EXPLOSION || $cause == EntityDamageEvent::CAUSE_BLOCK_EXPLOSION){
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_ENTITY_EXPLOSION || $cause->getCause() == EntityDamageEvent::CAUSE_BLOCK_EXPLOSION){
         		return $cfg["Death"]["death-explosion-message"]["custom"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_VOID){
         		return $cfg["Death"]["death-void-message"]["custom"];
@@ -487,7 +486,7 @@ class CustomAlertsAPI extends PluginBase {
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_PROJECTILE){
         		return $cfg["Death"]["death-projectile-message"]["hide"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_SUFFOCATION){
-        		return $cfg["Death"]["death-projectile-message"]["hide"];
+        		return $cfg["Death"]["death-suffocation-message"]["hide"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FALL){
         		return $cfg["Death"]["death-fall-message"]["hide"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FIRE){
@@ -498,7 +497,7 @@ class CustomAlertsAPI extends PluginBase {
         		return $cfg["Death"]["death-lava-message"]["hide"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_DROWNING){
         		return $cfg["Death"]["death-drowning-message"]["hide"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_ENTITY_EXPLOSION || $cause == EntityDamageEvent::CAUSE_BLOCK_EXPLOSION){
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_ENTITY_EXPLOSION || $cause->getCause() == EntityDamageEvent::CAUSE_BLOCK_EXPLOSION){
         		return $cfg["Death"]["death-explosion-message"]["hide"];
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_VOID){
         		return $cfg["Death"]["death-void-message"]["hide"];
@@ -525,7 +524,7 @@ class CustomAlertsAPI extends PluginBase {
     public function getDefaultDeathMessage(Player $player, $cause = null){
     	$cfg = $this->getConfig()->getAll();
         if($cause instanceof EntityDamageEvent){
-        	if($cause->getCause() == EntityDamageEvent::CAUSE_CONTACT){ //ok
+        	if($cause->getCause() == EntityDamageEvent::CAUSE_CONTACT){
         		$message = $cfg["Death"]["death-contact-message"]["message"];
         		if($cause instanceof EntityDamageByBlockEvent){
         			$message = str_replace("{BLOCK}", $cause->getDamager()->getName(), $message);
@@ -534,37 +533,39 @@ class CustomAlertsAPI extends PluginBase {
         		}
         	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_ENTITY_ATTACK){
         		$message = $cfg["Death"]["kill-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_PROJECTILE){ //ok
-        		$message = $cfg["Death"]["death-projectile-message"]["message"];
-        		if($cause instanceof EntityDamageByEntityEvent){
-        			$killer = $cause->getDamager();
-        			if($killer instanceof Living){
-        				$message = str_replace("{KILLER}", $killer->getName(), $message);
-        			}else{
-        				$message = str_replace("{KILLER}", "Unknown", $message);
-        			}
+        	    $killer = $cause->getDamager();
+        		if($killer instanceof Living){
+        			$message = str_replace("{KILLER}", $killer->getName(), $message);
         		}else{
         			$message = str_replace("{KILLER}", "Unknown", $message);
         		}
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_SUFFOCATION){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_PROJECTILE){
         		$message = $cfg["Death"]["death-projectile-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FALL){ //ok
+        		$killer = $cause->getDamager();
+        		if($killer instanceof Living){
+        			$message = str_replace("{KILLER}", $killer->getName(), $message);
+        		}else{
+        			$message = str_replace("{KILLER}", "Unknown", $message);
+        		}
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_SUFFOCATION){
+        		$message = $cfg["Death"]["death-suffocation-message"]["message"];
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FALL){
         		$message = $cfg["Death"]["death-fall-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FIRE){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FIRE){
         		$message = $cfg["Death"]["death-fire-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FIRE_TICK){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_FIRE_TICK){
         		$message = $cfg["Death"]["death-on-fire-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_LAVA){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_LAVA){
         		$message = $cfg["Death"]["death-lava-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_DROWNING){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_DROWNING){
         		$message = $cfg["Death"]["death-drowning-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_ENTITY_EXPLOSION || $cause == EntityDamageEvent::CAUSE_BLOCK_EXPLOSION){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_ENTITY_EXPLOSION || $cause->getCause() == EntityDamageEvent::CAUSE_BLOCK_EXPLOSION){
         		$message = $cfg["Death"]["death-explosion-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_VOID){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_VOID){
         		$message = $cfg["Death"]["death-void-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_SUICIDE){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_SUICIDE){
         		$message = $cfg["Death"]["death-suicide-message"]["message"];
-        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_MAGIC){ //ok
+        	}elseif($cause->getCause() == EntityDamageEvent::CAUSE_MAGIC){
         		$message = $cfg["Death"]["death-magic-message"]["message"];
         	}else{
         		$message = $cfg["Death"]["message"];
@@ -589,7 +590,7 @@ class CustomAlertsAPI extends PluginBase {
     }
     
     /**
-     * Set death message
+     * Set current death message
      *
      * @param string $message The message
      */
