@@ -374,7 +374,7 @@ Event functions are:
 ###### Get Player:
 
 ```php
-getPlayer()
+Player getPlayer()
 ```
 **Description:**<br>
 Get join event player.<br>
@@ -384,7 +384,7 @@ The join event player (instance of pocketmine\Player)
 ###### Get default PocketMine join message:
 
 ```php
-getPocketMineJoinMessage()
+string getPocketMineJoinMessage()
 ```
 **Description:**<br>
 Get default PocketMine join message.<br>
@@ -405,7 +405,7 @@ Event functions are:
 ###### Get Player:
 
 ```php
-getPlayer()
+Player getPlayer()
 ```
 **Description:**<br>
 Get quit event player.<br>
@@ -415,7 +415,7 @@ The quit event player (instance of pocketmine\Player)
 ###### Get default PocketMine quit message:
 
 ```php
-getPocketMineQuitMessage()
+string getPocketMineQuitMessage()
 ```
 **Description:**<br>
 Get default PocketMine quit message.<br>
@@ -436,7 +436,7 @@ Event functions are:
 ###### Get Player:
 
 ```php
-getPlayer()
+Player getPlayer()
 ```
 **Description:**<br>
 Get world change event player.<br>
@@ -446,7 +446,7 @@ The world change event player (instance of pocketmine\Player)
 ###### Get Origin Level:
 
 ```php
-getOrigin()
+Level getOrigin()
 ```
 **Description:**<br>
 Get origin level.<br>
@@ -456,7 +456,7 @@ The origin level (instance of pocketmine\Level)
 ###### Get Target Level:
 
 ```php
-getTarget()
+Level getTarget()
 ```
 **Description:**<br>
 Get target level.<br>
@@ -477,15 +477,15 @@ Event functions are:
 ###### Get Player:
 
 ```php
-getPlayer()
+Player getPlayer()
 ```
 **Description:**<br>
 Get death event player.<br>
 **Return:**<br>
-The death event player (instance of pocketmine\Player)
+The death event player
 
 ```php
-getCause()
+EntityDamageEvent|null getCause()
 ```
 **Description:**<br>
 Get death event cause.<br>
@@ -544,7 +544,7 @@ Get all CustomAlerts loaded extensions.<br>
 boolean isDefaultFirstJoinMessageEnabled()
 ```
 **Description:**<br>
- Check if default first join message is enabled.<br>
+Check if default first join message is enabled.<br>
 **Return:**<br>
 *boolean*
 
@@ -557,4 +557,201 @@ Get default first join message.<br>
 **Parameters:**<br>
 *$player* the current player<br>
 **Return:**<br>
-*string* the default message
+*string* the default first join message
+
+###### Check if a player has joined for the first time:
+```php
+boolean hasJoinedFirstTime(Player $player)
+```
+**Description:**<br>
+Check if a player has joined for the first time.<br>
+**Parameters:**<br>
+*$player*<br>
+**Return:**<br>
+*boolean*
+
+###### Check if default join message is custom:
+```php
+boolean isDefaultJoinMessageCustom()
+```
+**Description:**<br>
+Check if default join message is custom.<br>
+**Return:**<br>
+*boolean*
+
+###### Check if default join message is hidden:
+```php
+boolean isDefaultJoinMessageHidden()
+```
+**Description:**<br>
+Check if default join message is hidden.<br>
+**Return:**<br>
+*boolean*
+
+###### Get default join message:
+```php
+string getDefaultJoinMessage(Player $player)
+```
+**Description:**<br>
+Get default join message.<br>
+**Parameters:**<br>
+*$player* the current player<br>
+**Return:**<br>
+*string* the default join message
+
+###### Get current join message:
+```php
+string getJoinMessage()
+```
+**Description:**<br>
+Get current join message.<br>
+**Return:**<br>
+*string* the current join message
+
+###### Set current join message:
+```php
+function setJoinMessage($message)
+```
+**Description:**<br>
+Set current join message.<br>
+**Parameters:**<br>
+*$message*
+
+###### Check if default quit message is custom:
+```php
+boolean isDefaultQuitMessageCustom()
+```
+**Description:**<br>
+Check if default quit message is custom.<br>
+**Return:**<br>
+*boolean*
+
+###### Check if default quit message is hidden:
+```php
+boolean isDefaultQuitMessageHidden()
+```
+**Description:**<br>
+Check if default quit message is hidden.<br>
+**Return:**<br>
+*boolean*
+
+###### Get default quit message:
+```php
+string getDefaultQuitMessage(Player $player)
+```
+**Description:**<br>
+Get default quit message.<br>
+**Parameters:**<br>
+*$player* the current player<br>
+**Return:**<br>
+*string* the default quit message
+
+###### Get current quit message:
+```php
+string getQuitMessage()
+```
+**Description:**<br>
+Get current quit message.<br>
+**Return:**<br>
+*string* the current quit message
+
+###### Set current quit message:
+```php
+function setQuitMessage($message)
+```
+**Description:**<br>
+Set current quit message.<br>
+**Parameters:**<br>
+*$message*
+
+###### Check if default world change message is enabled:
+```php
+boolean isDefaultWorldChangeMessageEnabled()
+```
+**Description:**<br>
+Check if default world change message is enabled.<br>
+**Return:**<br>
+*boolean*
+
+###### Get default world change message:
+```php
+string getDefaultWorldChangeMessage(Player $player, Level $origin, Level $target)
+```
+**Description:**<br>
+Get default world change message.<br>
+**Parameters:**<br>
+*$player* the current player<br>
+*$origin* the origin level<br>
+*$target* the target level<br>
+**Return:**<br>
+*string* the default world change message
+
+###### Get current world change message:
+```php
+string getWorldChangeMessage()
+```
+**Description:**<br>
+Get current world change message.<br>
+**Return:**<br>
+*string* the current world change message
+
+###### Set current world change message:
+```php
+function setWorldChangeMessage($message)
+```
+**Description:**<br>
+Set current world change message.<br>
+**Parameters:**<br>
+*$message*
+
+###### Check if default death messages are custom:
+```php
+boolean isDefaultDeathMessageCustom($cause = null)
+```
+**Description:**<br>
+Check if default death messages are custom.<br>
+**Parameters:**<br>
+*$cause* Check message by cause<br>
+**Return:**<br>
+*boolean*
+
+###### Check if default death messages are hidden:
+```php
+boolean isDefaultDeathMessageHidden($cause = null)
+```
+**Description:**<br>
+Check if default death messages are hidden<br>
+**Parameters:**<br>
+*$cause* Check message by cause<br>
+**Return:**<br>
+*boolean*
+
+###### Get default death message related to the specified cause:
+```php
+string getDefaultDeathMessage(Player $player, $cause = null)
+```
+**Description:**<br>
+Get default death message related to the specified cause.<br>
+**Parameters:**<br>
+*$player* the current player<br>
+*$cause* the cause of death (instanceof EntityDamageEvent). If it's null, the function will return the default death message
+**Return:**<br>
+*string* the default death message related to the specified cause
+
+###### Get current death message:
+```php
+string getDeathMessage()
+```
+**Description:**<br>
+Get current death message.<br>
+**Return:**<br>
+*string* the current death message
+
+###### Set current death message:
+```php
+function setDeathMessage($message)
+```
+**Description:**<br>
+Set current death message.<br>
+**Parameters:**<br>
+*$message*
