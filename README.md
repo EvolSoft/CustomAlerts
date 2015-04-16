@@ -484,6 +484,8 @@ Get death event player.<br>
 **Return:**<br>
 The death event player
 
+###### Get Cause:
+
 ```php
 EntityDamageEvent|null getCause()
 ```
