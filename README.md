@@ -19,6 +19,8 @@ PocketMine-MP Alpha_1.4 API 1.11.0
 
 ***This Plugin uses the New API. You can't install it on old versions of PocketMine.***
 
+***To prevent bugs, delete all old plugin data if you are updating CustomAlerts.***
+
 With CustomAlerts you can customize or hide join/leave messages, first join messages, death messages, world change messages... (read documentation)
 
 **What is included?**
