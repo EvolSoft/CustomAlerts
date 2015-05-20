@@ -1,7 +1,7 @@
 name: CustomAlerts
-main: CustomAlerts\CustomAlertsAPI
-version: "1.2"
-api: [1.11.0]
+main: CustomAlerts\CustomAlerts
+version: "1.3"
+api: [1.12.0]
 load: STARTUP
 author: EvolSoft
 description: Customize alerts (join/leave messages, etc...)
@@ -17,9 +17,6 @@ permissions:
     default: op
     description: CustomAlerts permissions.
     children:
-      customalerts.extensions:
-        default: op
-        description: CustomAlerts command Extensions permission.
       customalerts.help:
         default: op
         description: CustomAlerts command Help permission.
