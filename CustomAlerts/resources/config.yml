@@ -1,5 +1,18 @@
 ---
 datetime-format: "H:i:s"
+Motd:
+  update-timeout: 1
+  custom: true
+  message: "&e[{TIME}] &aWelcome to your server! &n&b[{MAXPLAYERS}/{TOTALPLAYERS}]"
+OutdatedClient:
+  custom: true
+  message: "&cYour MCPE client is outdated!"
+OutdatedServer:
+  custom: true
+  message: "&cOops! Server outdated!"
+WhitelistedServer:
+  custom: true
+  message: "&c&oThis Server is whitelisted!"
 FirstJoin:
   enable: true
   message: "&2[{TIME}] &a{PLAYER}&d joined the game for the first time."
