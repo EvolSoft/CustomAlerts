@@ -2,33 +2,34 @@
 
 namespace CustomAlertsExample;
 
+use pocketmine\event\Listener;
+use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
-use pocketmine\Player;
 
 //CustomAlerts API Call
-use CustomAlerts\CustomAlertsAPI;
+use CustomAlerts\CustomAlerts;
 use CustomAlerts\Events\CustomAlertsJoinEvent;
 
-class Example extends PluginBase{
+class Example extends PluginBase implements Listener {
 	
 	/* 
-	 * This is an Example Plugin with CustomAlertsAPI implementation
+	 * This is an Example Plugin with CustomAlerts API implementation
 	 * This plugin will show an example join message using CustomAlerts API and Events
 	 */
     
     public function onEnable(){
-    	if(CustomAlertsAPI::getAPI()->getAPIVersion() == "1.0"){ //Checking API version. Important for API Functions Calls
-    		$this->getLogger()->info(TextFormat::GREEN . "Example Plugin using CustomAlerts (API v1.0)");
+    	if(CustomAlerts::getAPI()->getAPIVersion() == "1.1"){ //Checking API version. Important for API Functions Calls
+    		$this->getLogger()->info(TextFormat::GREEN . "Example Plugin using CustomAlerts (API v1.1)");
+    		$this->getServer()->getPluginManager()->registerEvents($this, $this);
     	}else{
-    		$this->getLogger()->alert(TextFormat::RED . "Plugin disabled. Please use CustomAlerts (API v1.0)");
+    		$this->getLogger()->alert(TextFormat::RED . "Plugin disabled. Please use CustomAlerts (API v1.1)");
     		$this->getPluginLoader()->disablePlugin($this);
     	}
-        CustomAlertsAPI::getAPI()->registerExtension($this);
     }
     
-    public function onCustomAlertsJoinEvent(CustomAlertsJoinEvent $event){
-    	CustomAlertsAPI::getAPI()->setJoinMessage("Example Join Message: " . $event->getPlayer()->getName());
+    public function onCAJoinEvent(CustomAlertsJoinEvent $event){
+    	CustomAlerts::getAPI()->setJoinMessage("Example Join Message: " . $event->getPlayer()->getName());
     }
     
 }
