@@ -1,10 +1,10 @@
 <?php
 
 /*
- * CustomAlerts (v1.2) by EvolSoft
+ * CustomAlerts (v1.3) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 16/04/2015 04:09 PM (UTC)
+ * Date: 08/05/2015 07:03 PM (UTC)
  * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -19,10 +19,11 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
+use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 
-class CustomAlertsAPI extends PluginBase {
+class CustomAlerts extends PluginBase {
     
 	//About Plugin Const
 	
@@ -30,7 +31,7 @@ class CustomAlertsAPI extends PluginBase {
 	const PRODUCER = "EvolSoft";
 	
 	/** @var string VERSION Plugin version */
-	const VERSION = "1.2";
+	const VERSION = "1.3";
 	
 	/** @var string MAIN_WEBSITE Plugin producer website */
 	const MAIN_WEBSITE = "http://www.evolsoft.tk";
@@ -40,22 +41,19 @@ class CustomAlertsAPI extends PluginBase {
 	/** @var string PREFIX Plugin prefix */
 	const PREFIX = "&b[&aCustom&cAlerts&b] ";
 	
-	/** @var array $extensions_highest CustomAlerts highest priority extensions */
-	private $extensions_highest = array();
-	
-	/** @var array $extensions_high CustomAlerts high priority extensions */
-	private $extensions_high = array();
-	
-	/** @var array $extensions_normal CustomAlerts normal priority extensions */
-	private $extensions_normal = array();
-	
-	/** @var array $extensions_low CustomAlerts low priority extensions */
-	private $extensions_low = array();
-	
-	/** @var array $extensions_lowest CustomAlerts lowest priority extensions */
-	private $extensions_lowest = array();
-	
 	//Messages
+	
+	/** @var string $message_motd The current motd message */
+	private $message_motd;
+	
+	/** @var string $message_outdated_client The current outdated client message */
+	private $message_outdated_client;
+	
+	/** @var string $message_outdated_server The current outdated server message */
+	private $message_outdated_server;
+	
+	/** @var string $message_whitelist The current whitelist message */
+	private $message_whitelist;
 	
 	/** @var string $message_join The current join message */
 	private $message_join;
@@ -69,7 +67,7 @@ class CustomAlertsAPI extends PluginBase {
 	/** @var string $message_death The current death message */
 	private $message_death;
 	
-	/** @var CustomAlerts $api Plugin instance */
+	/** @var CustomAlerts $instance Plugin instance */
 	private static $instance = null;
 	
 	/**
@@ -131,27 +129,13 @@ class CustomAlertsAPI extends PluginBase {
     	$this->cfg = $this->getConfig()->getAll();
     	$this->getCommand("customalerts")->setExecutor(new Commands\Commands($this));
     	$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+    	$this->getServer()->getScheduler()->scheduleRepeatingTask(new MotdTask($this), 20);
     }
     
     //API Functions
     
     /** @var string API_VERSION CustomAlerts API version */
-    const API_VERSION = "1.0";
-    
-    /** @var int PRIORITY_HIGHEST */
-    const PRIORITY_HIGHEST = 5;
-    
-    /** @var int PRIORITY_HIGH */
-    const PRIORITY_HIGH = 4;
-    
-    /** @var int PRIORITY_NORMAL */
-    const PRIORITY_NORMAL = 3;
-    
-    /** @var int PRIORITY_LOW */
-    const PRIORITY_LOW = 2;
-    
-    /** @var int PRIORITY_LOWEST */
-    const PRIORITY_LOWEST = 1;
+    const API_VERSION = "1.1";
     
     /**
      * Get CustomAlerts version
@@ -159,7 +143,7 @@ class CustomAlertsAPI extends PluginBase {
      * @return string CustomAlerts version
      */
     public function getVersion(){
-    	return CustomAlertsAPI::VERSION;
+    	return CustomAlerts::VERSION;
     }
     
     /**
@@ -168,32 +152,22 @@ class CustomAlertsAPI extends PluginBase {
      * @return string CustomAlerts API version
      */
     public function getAPIVersion(){
-    	return CustomAlertsAPI::API_VERSION;
+    	return CustomAlerts::API_VERSION;
     }
     
     /**
+     * @deprecated
      * Register Plugin as CustomAlerts Extension
      * 
      * @param PluginBase $extension The Plugin to register as extension
      * @param int $priority (optional)
      */
     public function registerExtension(PluginBase $extension, $priority = null){
-    	if($priority == CustomAlertsAPI::PRIORITY_HIGHEST){
-    		array_push($this->extensions_highest, $extension);
-    	}elseif($priority == CustomAlertsAPI::PRIORITY_HIGH){
-    		array_push($this->extensions_high, $extension);
-    	}elseif($priority == CustomAlertsAPI::PRIORITY_NORMAL){
-    		array_push($this->extensions_normal, $extension);
-    	}elseif($priority == CustomAlertsAPI::PRIORITY_LOW){
-    		array_push($this->extensions_low, $extension);
-    	}elseif($priority == CustomAlertsAPI::PRIORITY_LOWEST){
-    		array_push($this->extensions_lowest, $extension);
-    	}else{
-    	    array_push($this->extensions_normal, $extension);
-    	}
+    	Server::getInstance()->getLogger()->warning("This function has been deprecated since CustomAlerts API v1.1");
     }
     
     /**
+     * @deprecated
      * Get all CustomAlerts loaded extensions
      * 
      * @param int $priority (optional)
@@ -201,20 +175,180 @@ class CustomAlertsAPI extends PluginBase {
      * @return array All CustomAlerts loaded extensions if no priority specified, otherwise returns all extesions with the specified priority
      */
     public function getAllExtensions($priority = null){
-    	if($priority == CustomAlertsAPI::PRIORITY_HIGHEST){
-    		return $this->extensions_highest;
-    	}elseif($priority == CustomAlertsAPI::PRIORITY_HIGH){
-    		return $this->extensions_high;
-    	}elseif($priority == CustomAlertsAPI::PRIORITY_NORMAL){
-    		return $this->extensions_normal;
-    	}elseif($priority == CustomAlertsAPI::PRIORITY_LOW){
-    		return $this->extensions_low;
-    	}elseif($priority == CustomAlertsAPI::PRIORITY_LOWEST){
-    		return $this->extensions_lowest;
-    	}else{
-    		return array_merge($this->extensions_highest, $this->extensions_high, $this->extensions_normal, $this->extensions_low, $this->extensions_lowest);
-    	}
+    	Server::getInstance()->getLogger()->warning("This function has been deprecated since CustomAlerts API v1.1");
     }
+    
+    /**
+     * Check if motd is custom
+     * 
+     * @return boolean
+     */
+    public function isMotdCustom(){
+    	$cfg = $this->getConfig()->getAll();
+    	return $cfg["Motd"]["custom"];
+    }
+    
+    /**
+     * Get default motd message
+     *
+     * @return string The default motd message
+     */
+    public function getDefaultMotdMessage(){
+    	$cfg = $this->getConfig()->getAll();
+    	$message = $cfg["Motd"]["message"];
+    	$message = str_replace("{MAXPLAYERS}", $this->getServer()->getMaxPlayers(), $message);
+    	$message = str_replace("{TOTALPLAYERS}", count($this->getServer()->getOnlinePlayers()), $message);
+    	$message = str_replace("{TIME}", date($cfg["datetime-format"]), $message);
+    	return $this->translateColors("&", $message);
+    }
+    
+    /**
+     * Get current motd message
+     *
+     * @return string The current motd message
+     */
+    public function getMotdMessage(){
+    	return $this->message_motd;
+    }
+    
+    /**
+     * Set current motd message
+     *
+     * @param string $message The message
+     */
+    public function setMotdMessage($message){
+    	$this->message_motd = $message;
+    }
+    
+    /**
+     * Check if outdated client message is custom
+     *
+     * @return boolean
+     */
+    public function isOutdatedClientMessageCustom(){
+    	$cfg = $this->getConfig()->getAll();
+    	return $cfg["OutdatedClient"]["custom"];
+    }
+    
+    /**
+     * Get default outdated client message
+     *
+     * @return string The default outdated client message
+     */
+    public function getDefaultOutdatedClientMessage(Player $player){
+    	$cfg = $this->getConfig()->getAll();
+    	$message = $cfg["OutdatedClient"]["message"];
+    	$message = str_replace("{PLAYER}", $player->getName(), $message);
+    	$message = str_replace("{MAXPLAYERS}", $this->getServer()->getMaxPlayers(), $message);
+    	$message = str_replace("{TOTALPLAYERS}", count($this->getServer()->getOnlinePlayers()), $message);
+    	$message = str_replace("{TIME}", date($cfg["datetime-format"]), $message);
+    	return $this->translateColors("&", $message);
+    }
+    
+    /**
+     * Get current outdated client message
+     *
+     * @return string The current outdated client message
+     */
+    public function getOutdatedClientMessage(){
+    	return $this->message_outdated_client;
+    }
+    
+    /**
+     * Set current outdated client message
+     *
+     * @param string $message The message
+     */
+    public function setOutdatedClientMessage($message){
+    	$this->message_outdated_client = $message;
+    }
+    
+    /**
+     * Check if outdated server message is custom
+     *
+     * @return boolean
+     */
+    public function isOutdatedServerMessageCustom(){
+    	$cfg = $this->getConfig()->getAll();
+    	return $cfg["OutdatedServer"]["custom"];
+    }
+    
+    /**
+     * Get default outdated server message
+     *
+     * @return string The default outdated server message
+     */
+    public function getDefaultOutdatedServerMessage(Player $player){
+    	$cfg = $this->getConfig()->getAll();
+    	$message = $cfg["OutdatedServer"]["message"];
+    	$message = str_replace("{PLAYER}", $player->getName(), $message);
+    	$message = str_replace("{MAXPLAYERS}", $this->getServer()->getMaxPlayers(), $message);
+    	$message = str_replace("{TOTALPLAYERS}", count($this->getServer()->getOnlinePlayers()), $message);
+    	$message = str_replace("{TIME}", date($cfg["datetime-format"]), $message);
+    	return $this->translateColors("&", $message);
+    }
+    
+    /**
+     * Get current outdated server message
+     *
+     * @return string The current outdated server message
+     */
+    public function getOutdatedServerMessage(){
+    	return $this->message_outdated_server;
+    }
+    
+    /**
+     * Set current outdated server message
+     *
+     * @param string $message The message
+     */
+    public function setOutdatedServerMessage($message){
+    	$this->message_outdated_server = $message;
+    }
+    
+    /**
+     * Check if whitelist message is custom
+     *
+     * @return boolean
+     */
+    public function isWhitelistMessageCustom(){
+    	$cfg = $this->getConfig()->getAll();
+    	return $cfg["WhitelistedServer"]["custom"];
+    }
+    
+    /**
+     * Get default whitelist message
+     *
+     * @return string The default whitelist message
+     */
+    public function getDefaultWhitelistMessage(Player $player){
+    	$cfg = $this->getConfig()->getAll();
+    	$message = $cfg["WhitelistedServer"]["message"];
+    	$message = str_replace("{PLAYER}", $player->getName(), $message);
+    	$message = str_replace("{MAXPLAYERS}", $this->getServer()->getMaxPlayers(), $message);
+    	$message = str_replace("{TOTALPLAYERS}", count($this->getServer()->getOnlinePlayers()), $message);
+    	$message = str_replace("{TIME}", date($cfg["datetime-format"]), $message);
+    	return $this->translateColors("&", $message);
+    }
+    
+    /**
+     * Get current whitelist message
+     *
+     * @return string The current whitelist message
+     */
+    public function getWhitelistMessage(){
+    	return $this->message_whitelist;
+    }
+    
+    /**
+     * Set current whitelist message
+     *
+     * @param string $message The message
+     */
+    public function setWhitelistMessage($message){
+    	$this->message_whitelist = $message;
+    }
+    
     
     /**
      * Get if default first join message is enabled
@@ -283,8 +417,8 @@ class CustomAlertsAPI extends PluginBase {
      * @return boolean
      */
     public function isDefaultJoinMessageHidden(){
-    	$tmp = $this->getConfig()->getAll();
-    	return $tmp["Join"]["hide"];
+    	$cfg = $this->getConfig()->getAll();
+    	return $cfg["Join"]["hide"];
     }
     
     /**
@@ -404,7 +538,7 @@ class CustomAlertsAPI extends PluginBase {
     	$message = str_replace("{PLAYER}", $player->getName(), $message);
     	$message = str_replace("{MAXPLAYERS}", $this->getServer()->getMaxPlayers(), $message);
     	$message = str_replace("{TOTALPLAYERS}", count($this->getServer()->getOnlinePlayers()), $message);
-    	$message = str_replace("{TIME}", date($tmp["datetime-format"]), $message);
+    	$message = str_replace("{TIME}", date($cfg["datetime-format"]), $message);
     	return $this->translateColors("&", $message);
     }
     
