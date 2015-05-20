@@ -9,11 +9,11 @@ PocketMine-MP plugins
 
 ## Requirements
 
-PocketMine-MP Alpha_1.4 API 1.11.0
+PocketMine-MP Alpha_1.5 API 1.12.0
 
 ## Overview
 
-**CustomAlerts** allows you to customize or hide all PocketMine alerts (join/leave messages, etc...)
+**CustomAlerts** allows you to customize or hide all PocketMine alerts (join/leave messages, whitelist messages, outdated server/client messages etc...)
 
 **EvolSoft Website:** http://www.evolsoft.tk
 
@@ -21,13 +21,12 @@ PocketMine-MP Alpha_1.4 API 1.11.0
 
 ***To prevent bugs, delete all old plugin data if you are updating CustomAlerts.***
 
-With CustomAlerts you can customize or hide join/leave messages, first join messages, death messages, world change messages... (read documentation)
+With CustomAlerts you can customize or hide whitelist kick messages, outdated server/client messages, join/leave messages, first join messages, death messages, world change messages... (read documentation)
 
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- CustomAlerts_v1.2.phar : CustomAlerts Plugin + API*<br>
-*- CustomAlertsExample_v1.phar : CustomAlerts API implementation example*<br>
+*- CustomAlerts_v1.3.phar : CustomAlerts Plugin + API*<br>
 *- CustomAlertsExample : Example Plugin source code*<br>
 
 **Commands:**
@@ -79,6 +78,27 @@ Reset ("&r");<br>
 #REMEMBER THAT IF YOU USE CustomAlerts EXTENSIONS, MESSAGES MAY NOT FOLLOW THE DEFAULT CONFIG
 #Date/Time format (replaced in {TIME}). For format codes read http://php.net/manual/en/datetime.formats.php
 datetime-format: "H:i:s"
+#Server Motd message settings (available from MCPE 0.11.0 and later)
+Motd:
+  #Motd update timeout
+  update-timeout: 1
+  #Show custom Motd
+  custom: true
+  #Join message
+  #Available Tags:
+  # - {MAXPLAYERS}: Show the maximum number of players supported by the server
+  # - {TIME}: Show current time
+  # - {TOTALPLAYERS}: Show the number of all online players
+  message: "&e[{TIME}] &aWelcome to your server! &n&b[{MAXPLAYERS}/{TOTALPLAYERS}]"
+OutdatedClient:
+  custom: true
+  message: "&cYour MCPE client is outdated!"
+OutdatedServer:
+  custom: true
+  message: "&cOops! Server outdated!"
+WhitelistedServer:
+  custom: true
+  message: "&c&oThis Server is whitelisted!"
 #First Join message settings
 FirstJoin:
   #Enable First Join message
@@ -311,7 +331,6 @@ Death:
 **Permissions:**
 <br>
 - <dd><i><b>customalerts.*</b> - CustomAlertspermissions.</i></dd>
-- <dd><i><b>customalerts.extensions</b> - CustomAlerts command Extensions permission.</i></dd>
 - <dd><i><b>customalerts.help</b> - CustomAlerts command Help permission.</i></dd>
 - <dd><i><b>customalerts.info</b> - CustomAlerts command Info permission.</i></dd>
 - <dd><i><b>customalerts.reload</b> - CustomAlerts command Reload permission.</i></dd>
