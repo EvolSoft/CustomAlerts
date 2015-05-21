@@ -384,8 +384,6 @@ class Example extends PluginBase {
 ```php
 if(CustomAlerts::getAPI()->getAPIVersion() == "(used API version)"){
             //API compatible
-            //Now register this plugin as CustomAlerts Extension
-            CustomAlerts::getAPI()->registerExtension($this);
         }else{
             //API not compatible
             $this->getPluginLoader()->disablePlugin($this);
