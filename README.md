@@ -2,7 +2,8 @@
 
 # CustomAlerts
 
-Customize or hide alerts (join/leave messages, etc...) plugin for PocketMine-MP
+Customize or hide alerts (join/leave messages, whitelist messages, outdated server/client messages, etc...) plugin for PocketMine-MP
+
 ## Category
 
 PocketMine-MP plugins
@@ -13,7 +14,7 @@ PocketMine-MP Alpha_1.5 API 1.12.0
 
 ## Overview
 
-**CustomAlerts** allows you to customize or hide all PocketMine alerts (join/leave messages, whitelist messages, outdated server/client messages etc...)
+**CustomAlerts** allows you to customize or hide all PocketMine alerts (join/leave messages, whitelist messages, outdated server/client messages, etc...)
 
 **EvolSoft Website:** http://www.evolsoft.tk
 
@@ -84,20 +85,44 @@ Motd:
   update-timeout: 1
   #Show custom Motd
   custom: true
-  #Join message
+  #Motd message
   #Available Tags:
   # - {MAXPLAYERS}: Show the maximum number of players supported by the server
   # - {TIME}: Show current time
   # - {TOTALPLAYERS}: Show the number of all online players
   message: "&e[{TIME}] &aWelcome to your server! &n&b[{MAXPLAYERS}/{TOTALPLAYERS}]"
+#Outdated Client message (available from MCPE 0.11.0 BUILD 11 and later)
 OutdatedClient:
+  #Show custom Outdated Client message
   custom: true
+  #Outdated Client message
+  #Available Tags:
+  # - {MAXPLAYERS}: Show the maximum number of players supported by the server
+  # - {PLAYER}: Show player name
+  # - {TIME}: Show current time
+  # - {TOTALPLAYERS}: Show the number of all online players
   message: "&cYour MCPE client is outdated!"
+#Outdated Server message (available from MCPE 0.11.0 BUILD 11 and later)
 OutdatedServer:
+  #Show custom Outdated Server message
   custom: true
+  #Outdated Server message
+  #Available Tags:
+  # - {MAXPLAYERS}: Show the maximum number of players supported by the server
+  # - {PLAYER}: Show player name
+  # - {TIME}: Show current time
+  # - {TOTALPLAYERS}: Show the number of all online players
   message: "&cOops! Server outdated!"
+#Whitelisted Server message (available from MCPE 0.11.0 BUILD 11 and later)
 WhitelistedServer:
+  #Show custom  Whitelisted Server message
   custom: true
+  #Whitelisted Server message
+  #Available Tags:
+  # - {MAXPLAYERS}: Show the maximum number of players supported by the server
+  # - {PLAYER}: Show player name
+  # - {TIME}: Show current time
+  # - {TOTALPLAYERS}: Show the number of all online players
   message: "&c&oThis Server is whitelisted!"
 #First Join message settings
 FirstJoin:
@@ -346,21 +371,21 @@ depend: [CustomAlerts]
 *2. Include CustomAlerts API and CustomAlerts Events in your php code:*
 ```php
 //CustomAlerts API
-use CustomAlerts\CustomAlertsAPI;
+use CustomAlerts\CustomAlerts;
 //CustomAlerts Events
 use CustomAlerts\Events\CustomAlertsJoinEvent;
 ```
-*3. Create the class (don't forget to add 'extends PluginBase'):*
+*3. Create the class:*
 ```php
 class Example extends PluginBase {
 }
 ```
 *4. Check if CustomAlerts API is compatible and register it as CustomAlerts extension (insert this code in onEnable() function)*
 ```php
-if(CustomAlertsAPI::getAPI()->getAPIVersion() == "(used API version)"){
+if(CustomAlerts::getAPI()->getAPIVersion() == "(used API version)"){
             //API compatible
             //Now register this plugin as CustomAlerts Extension
-            CustomAlertsAPI::getAPI()->registerExtension($this);
+            CustomAlerts::getAPI()->registerExtension($this);
         }else{
             //API not compatible
             $this->getPluginLoader()->disablePlugin($this);
@@ -368,27 +393,47 @@ if(CustomAlertsAPI::getAPI()->getAPIVersion() == "(used API version)"){
 ```
 *5. Handle a CustomAlerts event (in this tutorial we will handle the CustomAlertsJoinEvent):*
 ```php
-//REMEMBER THAT THE FUNCTION NAME IN THIS CASE MUST BE onCustomAlertsJoinEvent. IF YOU CHANGE THE FUNCTION NAME, THE FUNCTION WON'T BE EXECUTED
-public function onCustomAlertsJoinEvent(CustomAlertsJoinEvent $event){
-  CustomAlertsAPI::getAPI()->setJoinMessage("Example Join message: " . $event->getPlayer()->getName());
+public function onCAJoinEvent(CustomAlertsJoinEvent $event){
+  CustomAlerts::getAPI()->setJoinMessage("Example Join message: " . $event->getPlayer()->getName());
 }
 ```
 *6. Call the API function:*
 ```php
-CustomAlertsAPI::getAPI()->api_function();
+CustomAlerts::getAPI()->api_function();
 ```
 ***A full plugin example using CustomAlerts API and CustomAlerts Events is included in the ZIP file.***
 
 **CustomAlerts API Events:**
 
+###### CustomAlertsDeathEvent:
+
+This event is handled when a player dies. It must be declared:
+
+Event functions are:
+
+###### Get Player:
+
+```php
+Player getPlayer()
+```
+**Description:**<br>
+Get death event player.<br>
+**Return:**<br>
+The death event player
+
+###### Get Cause:
+
+```php
+EntityDamageEvent|null getCause()
+```
+**Description:**<br>
+Get death event cause.<br>
+**Return:**<br>
+The death event cause
+
 ###### CustomAlertsJoinEvent:
 
-This event is handled when a player joins. It must be declared:
-```php
-public function onCustomAlertsJoinEvent(CustomAlertsJoinEvent $event){
-}
-```
-Remember that the function name must be *onCustomAlertsJoinEvent*
+This event is handled when a player joins.
 
 Event functions are:
 
@@ -412,14 +457,57 @@ Get default PocketMine join message.<br>
 **Return:**<br>
 The default PocketMine join message
 
+###### CustomAlertsMotdUpdateEvent:
+
+This event is handled when the motd is updated
+
+Event functions are:
+
+###### Get default PocketMine Motd:
+
+```php
+string getPocketMineMotd()
+```
+**Description:**<br>
+Get default PocketMine Motd.<br>
+**Return:**<br>
+The default PocketMine Motd
+
+###### CustomAlertsOutdatedClientKickEvent:
+
+This event is handled when a player is kicked due to outdated client.
+
+Event functions are:
+
+###### Get Player:
+
+```php
+Player getPlayer()
+```
+**Description:**<br>
+Get event player.<br>
+**Return:**<br>
+The event player (instance of pocketmine\Player)
+
+###### CustomAlertsOutdatedServerKickEvent:
+
+This event is handled when a player is kicked due to outdated server.
+
+Event functions are:
+
+###### Get Player:
+
+```php
+Player getPlayer()
+```
+**Description:**<br>
+Get event player.<br>
+**Return:**<br>
+The event player (instance of pocketmine\Player)
+
 ###### CustomAlertsQuitEvent:
 
 This event is handled when a player quits. It must be declared:
-```php
-public function onCustomAlertsQuitEvent(CustomAlertsQuitEvent $event){
-}
-```
-Remember that the function name must be *onCustomAlertsQuitEvent*
 
 Event functions are:
 
@@ -443,14 +531,25 @@ Get default PocketMine quit message.<br>
 **Return:**<br>
 The default PocketMine quit message
 
+###### CustomAlertsWhitelistKickEvent:
+
+This event is handled when a player is kicked due to whitelisted server.
+
+Event functions are:
+
+###### Get Player:
+
+```php
+Player getPlayer()
+```
+**Description:**<br>
+Get event player.<br>
+**Return:**<br>
+The event player (instance of pocketmine\Player)
+
 ###### CustomAlertsWorldChangeEvent:
 
 This event is handled when a player changes world. It must be declared:
-```php
-public function onCustomAlertsWorldChangeEvent(CustomAlertsWorldChangeEvent $event){
-}
-```
-Remember that the function name must be *onCustomAlertsWorldChangeEvent*
 
 Event functions are:
 
@@ -484,37 +583,6 @@ Get target level.<br>
 **Return:**<br>
 The target level (instance of pocketmine\Level)
 
-###### CustomAlertsDeathEvent:
-
-This event is handled when a player dies. It must be declared:
-```php
-public function onCustomAlertsDeathEvent(CustomAlertsDeathEvent $event){
-}
-```
-Remember that the function name must be *onCustomAlertsDeathEvent*
-
-Event functions are:
-
-###### Get Player:
-
-```php
-Player getPlayer()
-```
-**Description:**<br>
-Get death event player.<br>
-**Return:**<br>
-The death event player
-
-###### Get Cause:
-
-```php
-EntityDamageEvent|null getCause()
-```
-**Description:**<br>
-Get death event cause.<br>
-**Return:**<br>
-The death event cause
-
 **CustomAlerts API Functions:**
 
 ###### Get Version:
@@ -535,32 +603,155 @@ Get the CustomAlerts API version.<br>
 **Return:**<br>
 plugin API version
 
-###### Register a CustomAlerts extension:
+###### Check if motd message is custom:
 ```php
-function registerExtension(PluginBase $extension, $priority = null)
+boolean isMotdCustom()
 ```
 **Description:**<br>
-Register a CustomAlerts extension.<br>
-**Parameters:**<br>
-*$extension* the extension to register<br>
-*$priority* extension priority<br>
-*Available priorities are:*<br>
-***PRIORITY_HIGHEST***<br>
-***PRIORITY_HIGH***<br>
-***PRIORITY_NORMAL***<br>
-***PRIORITY_LOW***<br>
-***PRIORITY_LOWEST***
-
-###### Get all CustomAlerts loaded extensions:
-```php
-array getAllExtensions($priority = null)
-```
-**Description:**<br>
-Get all CustomAlerts loaded extensions.<br>
-**Parameters:**<br>
-*$priority* extension priority (if it's not specified, the function will return an array with all loaded extensions)<br>
+Check if motd message is custom.<br>
 **Return:**<br>
-*array* of loaded extensions
+*boolean*
+
+###### Get default motd message:
+```php
+string getDefaultMotdMessage()
+```
+**Description:**<br>
+Get default motd message.<br>
+**Return:**<br>
+*string* the default motd message
+
+###### Get current motd message:
+```php
+string getMotdMessage()
+```
+**Description:**<br>
+Get current motd message.<br>
+**Return:**<br>
+*string* the current motd message
+
+###### Set current motd message:
+```php
+function setMotdMessage($message)
+```
+**Description:**<br>
+Set current motd message.<br>
+**Parameters:**<br>
+*$message*
+
+###### Check if outdated client message is custom:
+```php
+boolean isOutdatedClientMessageCustom()
+```
+**Description:**<br>
+Check if outdated client message is custom.<br>
+**Return:**<br>
+*boolean*
+
+###### Get default outdated client message:
+```php
+string getDefaultOutdatedClientMessage(Player $player)
+```
+**Description:**<br>
+Get default outdated client message.<br>
+**Parameters:**<br>
+*$player* the current player<br>
+**Return:**<br>
+*string* the default outdated client message
+
+###### Get current outdated client message:
+```php
+string getOutdatedClientMessage()
+```
+**Description:**<br>
+Get current outdated client message.<br>
+**Return:**<br>
+*string* the current outdated client message
+
+###### Set current outdated client message:
+```php
+function setOutdatedClientMessage($message)
+```
+**Description:**<br>
+Set current outdated client message.<br>
+**Parameters:**<br>
+*$message*
+
+###### Check if outdated server message is custom:
+```php
+boolean isOutdatedServerMessageCustom()
+```
+**Description:**<br>
+Check if outdated server message is custom.<br>
+**Return:**<br>
+*boolean*
+
+###### Get default outdated server message:
+```php
+string getDefaultOutdatedServerMessage(Player $player)
+```
+**Description:**<br>
+Get default outdated server message.<br>
+**Parameters:**<br>
+*$player* the current player<br>
+**Return:**<br>
+*string* the default outdated server message
+
+###### Get current outdated server message:
+```php
+string getOutdatedServerMessage()
+```
+**Description:**<br>
+Get current outdated server message.<br>
+**Return:**<br>
+*string* the current outdated server message
+
+###### Set current outdated server message:
+```php
+function setOutdatedServerMessage($message)
+```
+**Description:**<br>
+Set current outdated server message.<br>
+**Parameters:**<br>
+*$message*
+
+###### Check if whitelist message is custom:
+```php
+boolean isWhitelistMessageCustom()
+```
+**Description:**<br>
+Check if whitelist message is custom.<br>
+**Return:**<br>
+*boolean*
+
+###### Get default whitelist message:
+```php
+string getDefaultWhitelistMessage(Player $player)
+```
+**Description:**<br>
+Get default whitelist message.<br>
+**Parameters:**<br>
+*$player* the current player<br>
+**Return:**<br>
+*string* the default whitelist message
+
+###### Get current whitelist message:
+```php
+string getWhitelistMessage()
+```
+**Description:**<br>
+Get current whitelist message.<br>
+**Return:**<br>
+*string* the current whitelist message
+
+###### Set current whitelist message:
+```php
+function setWhitelistMessage($message)
+```
+**Description:**<br>
+Set current whitelist message.<br>
+**Parameters:**<br>
+*$message*
 
 ###### Check if default first join message is enabled:
 ```php
