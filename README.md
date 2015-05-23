@@ -414,7 +414,7 @@ CustomAlerts::getAPI()->api_function();
 
 ###### CustomAlertsDeathEvent:
 
-This event is handled when a player dies. It must be declared:
+This event is handled when a player dies.
 
 Event functions are:
 
