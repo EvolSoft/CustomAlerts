@@ -363,7 +363,7 @@ Death:
 <br><br>
 **Permissions:**
 <br>
-- <dd><i><b>customalerts.*</b> - CustomAlertspermissions.</i></dd>
+- <dd><i><b>customalerts.*</b> - CustomAlerts permissions.</i></dd>
 - <dd><i><b>customalerts.help</b> - CustomAlerts command Help permission.</i></dd>
 - <dd><i><b>customalerts.info</b> - CustomAlerts command Info permission.</i></dd>
 - <dd><i><b>customalerts.reload</b> - CustomAlerts command Reload permission.</i></dd>
