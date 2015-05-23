@@ -14,7 +14,7 @@ PocketMine-MP Alpha_1.5 API 1.12.0
 
 ## Overview
 
-**CustomAlerts** allows you to customize or hide all PocketMine alerts (join/leave messages, whitelist messages, outdated server/client messages, etc...)
+**CustomAlerts** lets you customize or hide all PocketMine alerts (join/leave messages, whitelist messages, outdated server/client messages, etc...)
 
 **EvolSoft Website:** http://www.evolsoft.tk
 
@@ -23,6 +23,14 @@ PocketMine-MP Alpha_1.5 API 1.12.0
 ***To prevent bugs, delete all old plugin data if you are updating CustomAlerts.***
 
 With CustomAlerts you can customize or hide whitelist kick messages, outdated server/client messages, join/leave messages, first join messages, death messages, world change messages... (read documentation)
+
+**Features**
+
+- Customize or hide join, quit and death messages
+- Add first join and world change messages
+- Customize Motd ***(from MCPE 0.11.0)***
+- Customize Outdated Server/Client kick messages ***(from MCPE 0.11.0 BUILD 11)***
+- Customize Whitelist kick messages ***(from MCPE 0.11.0 BUILD 11)***
 
 **What is included?**
 
@@ -388,6 +396,7 @@ if(CustomAlerts::getAPI()->getAPIVersion() == "(used API version)"){
             //API not compatible
             $this->getPluginLoader()->disablePlugin($this);
         }
+  }
 ```
 *5. Handle a CustomAlerts event (in this tutorial we will handle the CustomAlertsJoinEvent):*
 ```php
