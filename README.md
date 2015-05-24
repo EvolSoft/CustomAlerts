@@ -378,6 +378,8 @@ depend: [CustomAlerts]
 ```
 *2. Include CustomAlerts API and CustomAlerts Events in your php code:*
 ```php
+//PocketMine Event Listener
+use pocketmine\event\Listener;
 //CustomAlerts API
 use CustomAlerts\CustomAlerts;
 //CustomAlerts Events
@@ -385,13 +387,15 @@ use CustomAlerts\Events\CustomAlertsJoinEvent;
 ```
 *3. Create the class:*
 ```php
-class Example extends PluginBase {
+class Example extends PluginBase implements Listener {
 }
 ```
 *4. Check if CustomAlerts API is compatible (insert this code in onEnable() function)*
 ```php
 if(CustomAlerts::getAPI()->getAPIVersion() == "(used API version)"){
             //API compatible
+            //Register Events
+            $this->getServer()->getPluginManager()->registerEvents($this, $this);
         }else{
             //API not compatible
             $this->getPluginLoader()->disablePlugin($this);
