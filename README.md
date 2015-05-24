@@ -388,7 +388,7 @@ use CustomAlerts\Events\CustomAlertsJoinEvent;
 class Example extends PluginBase {
 }
 ```
-*4. Check if CustomAlerts API is compatible and register it as CustomAlerts extension (insert this code in onEnable() function)*
+*4. Check if CustomAlerts API is compatible (insert this code in onEnable() function)*
 ```php
 if(CustomAlerts::getAPI()->getAPIVersion() == "(used API version)"){
             //API compatible
