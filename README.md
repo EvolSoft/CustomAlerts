@@ -35,7 +35,7 @@ With CustomAlerts you can customize or hide whitelist kick messages, outdated se
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- CustomAlerts_v1.3.phar : CustomAlerts Plugin + API*<br>
+*- CustomAlerts_v1.4.phar : CustomAlerts Plugin + API*<br>
 *- CustomAlertsExample : Example Plugin source code*<br>
 
 **Commands:**
