@@ -1,7 +1,7 @@
 <?php
 
 /*
- * CustomAlerts (v1.3) by EvolSoft
+ * CustomAlerts (v1.4) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 08/05/2015 07:03 PM (UTC)
@@ -31,7 +31,7 @@ class CustomAlerts extends PluginBase {
 	const PRODUCER = "EvolSoft";
 	
 	/** @var string VERSION Plugin version */
-	const VERSION = "1.3";
+	const VERSION = "1.4";
 	
 	/** @var string MAIN_WEBSITE Plugin producer website */
 	const MAIN_WEBSITE = "http://www.evolsoft.tk";
