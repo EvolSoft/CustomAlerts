@@ -1,10 +1,10 @@
 <?php
 
 /*
- * CustomAlerts (v1.3) by EvolSoft
+ * CustomAlerts (v1.4) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 09/05/2015 04:16 PM (UTC)
+ * Date: 26/05/2015 01:10 PM (UTC)
  * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -23,6 +23,7 @@ use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\protocol\DataPacket;
 use pocketmine\network\protocol\Info;
 use pocketmine\Player;
+use pocketmine\Server;
 
 use CustomAlerts\Events\CustomAlertsDeathEvent;
 use CustomAlerts\Events\CustomAlertsJoinEvent;
