@@ -1,10 +1,10 @@
 <?php
 
 /*
- * CustomAlerts (v1.4) by EvolSoft
+ * CustomAlerts (v1.5) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 09/05/2015 01:51 PM (UTC)
+ * Date: 05/06/2015 10:52 AM (UTC)
  * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -54,6 +54,10 @@ class Commands extends PluginBase implements CommandExecutor {
     				}elseif($args[0]=="reload"){
     					if($sender->hasPermission("customalerts.reload")){
     						$this->plugin->reloadConfig();
+    						//Reload Motd
+    						if(!CustomAlerts::getAPI()->isMotdCustom()){
+    							CustomAlerts::getAPI()->setMotdMessage($this->plugin->getServer()->getMotd());
+    						}
     						$sender->sendMessage($this->plugin->translateColors("&", CustomAlerts::PREFIX . "&aConfiguration Reloaded."));
     				        break;
     					}else{
