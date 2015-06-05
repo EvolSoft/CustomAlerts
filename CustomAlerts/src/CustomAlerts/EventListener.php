@@ -1,10 +1,10 @@
 <?php
 
 /*
- * CustomAlerts (v1.4) by EvolSoft
+ * CustomAlerts (v1.5) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 26/05/2015 01:10 PM (UTC)
+ * Date: 28/05/2015 04:29 PM (UTC)
  * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -88,6 +88,11 @@ class EventListener implements Listener {
     	}
     }
     
+    /**
+     * @param PlayerJoinEvent $event
+     *
+     * @priority HIGHEST
+     */
     public function onPlayerJoin(PlayerJoinEvent $event){
     	$player = $event->getPlayer();
     	//Motd Update
@@ -130,6 +135,11 @@ class EventListener implements Listener {
     	$event->setJoinMessage(CustomAlerts::getAPI()->getJoinMessage());
     }
     
+    /**
+     * @param PlayerQuitEvent $event
+     *
+     * @priority HIGHEST
+     */
     public function onPlayerQuit(PlayerQuitEvent $event){
     	 $player = $event->getPlayer();
     	 //Motd Update
