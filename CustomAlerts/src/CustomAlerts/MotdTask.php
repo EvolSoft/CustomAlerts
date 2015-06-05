@@ -1,10 +1,10 @@
 <?php
 
 /*
- * CustomAlerts (v1.4) by EvolSoft
+ * CustomAlerts (v1.5) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 09/05/2015 04:00 PM (UTC)
+ * Date: 05/06/2015 10:51 AM (UTC)
  * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -32,11 +32,8 @@ class MotdTask extends PluginTask {
     		//Check if Motd message is custom
     		if(CustomAlerts::getAPI()->isMotdCustom()){
     			CustomAlerts::getAPI()->setMotdMessage(CustomAlerts::getAPI()->getDefaultMotdMessage());
-    		}else{
-    			CustomAlerts::getAPI()->setMotdMessage($this->plugin->translateColors("&", $this->plugin->getServer()->getMotd()));
     		}
-    		$this->plugin->getServer()->getPluginManager()->callEvent(new CustomAlertsMotdUpdateEvent($this->plugin->getServer()->getMotd()));
-    		$this->plugin->getServer()->getNetwork()->setName(CustomAlerts::getAPI()->getMotdMessage());
+			$this->plugin->getServer()->getPluginManager()->callEvent(new CustomAlertsMotdUpdateEvent($this->plugin->getServer()->getMotd()));
     		$this->counter = 0;
     	}
     }
