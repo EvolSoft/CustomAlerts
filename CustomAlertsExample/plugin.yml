@@ -1,6 +1,6 @@
 name: CustomAlertsExample
 main: CustomAlertsExample\Example
-version: 1.1
+version: 1.2
 api: [1.12.0]
 depend: [CustomAlerts]
 load: STARTUP
