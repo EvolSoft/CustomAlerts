@@ -453,6 +453,22 @@ Get death event cause.<br>
 **Return:**<br>
 The death event cause
 
+###### CustomAlertsFullServerKickEvent:
+
+This event is handled when a player is kicked due to full server.
+
+Event functions are:
+
+###### Get Player:
+
+```php
+Player getPlayer()
+```
+**Description:**<br>
+Get event player.<br>
+**Return:**<br>
+The event player (instance of pocketmine\Player)
+
 ###### CustomAlertsJoinEvent:
 
 This event is handled when a player joins.
@@ -772,6 +788,44 @@ function setWhitelistMessage($message)
 ```
 **Description:**<br>
 Set current whitelist message.<br>
+**Parameters:**<br>
+*$message*
+
+###### Check if full server message is custom:
+```php
+boolean isFullServerMessageCustom()
+```
+**Description:**<br>
+Check if full server message is custom.<br>
+**Return:**<br>
+*boolean*
+
+###### Get default full server message:
+```php
+string getDefaultFullServerMessage(Player $player)
+```
+**Description:**<br>
+Get default full server message.<br>
+**Parameters:**<br>
+*$player* the current player<br>
+**Return:**<br>
+*string* the default full server message
+
+###### Get current full server message:
+```php
+string getFullServerMessage()
+```
+**Description:**<br>
+Get current full server message.<br>
+**Return:**<br>
+*string* the current full server message
+
+###### Set current full server message:
+```php
+function setFullServerMessage($message)
+```
+**Description:**<br>
+Set current full server message.<br>
 **Parameters:**<br>
 *$message*
 
