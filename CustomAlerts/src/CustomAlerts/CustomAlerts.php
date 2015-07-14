@@ -1,10 +1,10 @@
 <?php
 
 /*
- * CustomAlerts (v1.5) by EvolSoft
+ * CustomAlerts (v1.6) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 05/06/2015 10:43 AM (UTC)
+ * Date: 14/07/2015 01:34 PM (UTC)
  * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -31,7 +31,7 @@ class CustomAlerts extends PluginBase {
 	const PRODUCER = "EvolSoft";
 	
 	/** @var string VERSION Plugin version */
-	const VERSION = "1.5";
+	const VERSION = "1.6";
 	
 	/** @var string MAIN_WEBSITE Plugin producer website */
 	const MAIN_WEBSITE = "http://www.evolsoft.tk";
@@ -54,6 +54,9 @@ class CustomAlerts extends PluginBase {
 	
 	/** @var string $message_whitelist The current whitelist message */
 	private $message_whitelist;
+	
+	/** @var string $message_fullserver The current full server message */
+	private $message_fullserver;
 	
 	/** @var string $message_join The current join message */
 	private $message_join;
@@ -135,7 +138,7 @@ class CustomAlerts extends PluginBase {
     //API Functions
     
     /** @var string API_VERSION CustomAlerts API version */
-    const API_VERSION = "1.1";
+    const API_VERSION = "1.2";
     
     /**
      * Get CustomAlerts version
@@ -348,6 +351,49 @@ class CustomAlerts extends PluginBase {
      */
     public function setWhitelistMessage($message){
     	$this->message_whitelist = $message;
+    }
+    
+    /**
+     * Check if full server message is custom
+     *
+     * @return boolean
+     */
+    public function isFullServerMessageCustom(){
+    	$cfg = $this->getConfig()->getAll();
+    	return $cfg["FullServer"]["custom"];
+    }
+    
+    /**
+     * Get default full server message
+     *
+     * @return string The default full server message
+     */
+    public function getDefaultFullServerMessage(Player $player){
+    	$cfg = $this->getConfig()->getAll();
+    	$message = $cfg["FullServer"]["message"];
+    	$message = str_replace("{PLAYER}", $player->getName(), $message);
+    	$message = str_replace("{MAXPLAYERS}", $this->getServer()->getMaxPlayers(), $message);
+    	$message = str_replace("{TOTALPLAYERS}", count($this->getServer()->getOnlinePlayers()), $message);
+    	$message = str_replace("{TIME}", date($cfg["datetime-format"]), $message);
+    	return $this->translateColors("&", $message);
+    }
+    
+    /**
+     * Get current full server message
+     *
+     * @return string The current full server message
+     */
+    public function getFullServerMessage(){
+    	return $this->message_fullserver;
+    }
+    
+    /**
+     * Set current full server message
+     *
+     * @param string $message The message
+     */
+    public function setFullServerMessage($message){
+    	$this->message_fullserver = $message;
     }
     
     
