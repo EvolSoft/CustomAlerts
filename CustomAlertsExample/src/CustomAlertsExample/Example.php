@@ -19,11 +19,11 @@ class Example extends PluginBase implements Listener {
 	 */
     
     public function onEnable(){
-    	if(CustomAlerts::getAPI()->getAPIVersion() == "1.1"){ //Checking API version. Important for API Functions Calls
-    		$this->getLogger()->info(TextFormat::GREEN . "Example Plugin using CustomAlerts (API v1.1)");
+    	if(CustomAlerts::getAPI()->getAPIVersion() == "1.2"){ //Checking API version. Important for API Functions Calls
+    		$this->getLogger()->info(TextFormat::GREEN . "Example Plugin using CustomAlerts (API v1.2)");
     		$this->getServer()->getPluginManager()->registerEvents($this, $this);
     	}else{
-    		$this->getLogger()->alert(TextFormat::RED . "Plugin disabled. Please use CustomAlerts (API v1.1)");
+    		$this->getLogger()->alert(TextFormat::RED . "Plugin disabled. Please use CustomAlerts (API v1.2)");
     		$this->getPluginLoader()->disablePlugin($this);
     	}
     }
