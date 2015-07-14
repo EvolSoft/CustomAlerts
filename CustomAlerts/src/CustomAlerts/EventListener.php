@@ -1,7 +1,7 @@
 <?php
 
 /*
- * CustomAlerts (v1.5) by EvolSoft
+ * CustomAlerts (v1.6) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 28/05/2015 04:29 PM (UTC)
@@ -26,6 +26,7 @@ use pocketmine\Player;
 use pocketmine\Server;
 
 use CustomAlerts\Events\CustomAlertsDeathEvent;
+use CustomAlerts\Events\CustomAlertsFullServerKickEvent;
 use CustomAlerts\Events\CustomAlertsJoinEvent;
 use CustomAlerts\Events\CustomAlertsMotdUpdateEvent;
 use CustomAlerts\Events\CustomAlertsOutdatedClientKickEvent;
@@ -72,18 +73,38 @@ class EventListener implements Listener {
     	}
     }
     
+    /**
+     * @param PlayerPreLoginEvent $event
+     *
+     * @priority HIGHEST
+     */
     public function onPlayerPreLogin(PlayerPreLoginEvent $event){
     	$player = $event->getPlayer();
-    	if(!$this->plugin->getServer()->isWhitelisted($event->getPlayer()->getName())){
-    	    //Check if Whitelist message is custom
-    		if(CustomAlerts::getAPI()->isWhitelistMessageCustom()){
-    			CustomAlerts::getAPI()->setWhitelistMessage(CustomAlerts::getAPI()->getDefaultWhitelistMessage($player));
+    	if(count($this->plugin->getServer()->getOnlinePlayers()) - 1 < $this->plugin->getServer()->getMaxPlayers()){
+    		if(!$this->plugin->getServer()->isWhitelisted($event->getPlayer()->getName())){
+    			//Check if Whitelist message is custom
+    			if(CustomAlerts::getAPI()->isWhitelistMessageCustom()){
+    				CustomAlerts::getAPI()->setWhitelistMessage(CustomAlerts::getAPI()->getDefaultWhitelistMessage($player));
+    			}
+    			//Whitelist Kick Event
+    			$this->plugin->getServer()->getPluginManager()->callEvent(new CustomAlertsWhitelistKickEvent($player));
+    			//Check if Whitelist message is not empty
+    			if(CustomAlerts::getAPI()->getWhitelistMessage() != null){
+    				$player->close("", CustomAlerts::getAPI()->getWhitelistMessage());
+    				$event->setCancelled(true);
+    			}
     		}
-    		//Whitelist Kick Event
-    		$this->plugin->getServer()->getPluginManager()->callEvent(new CustomAlertsWhitelistKickEvent($player));
-    		//Check if Whitelist message is not empty
-    		if(CustomAlerts::getAPI()->getWhitelistMessage() != null){
-    			$player->close("", CustomAlerts::getAPI()->getWhitelistMessage());
+    	}else{
+    		//Check if Full Server message is custom
+    		if(CustomAlerts::getAPI()->isFullServerMessageCustom()){
+    			CustomAlerts::getAPI()->setFullServerMessage(CustomAlerts::getAPI()->getDefaultFullServerMessage($player));
+    		}
+    		//Full Server Kick Event
+    		$this->plugin->getServer()->getPluginManager()->callEvent(new CustomAlertsFullServerKickEvent($player));
+    		//Check if Full Server message is not empty
+    		if(CustomAlerts::getAPI()->getFullServerMessage() != null){
+    			$player->close("", CustomAlerts::getAPI()->getFullServerMessage());
+    			$event->setCancelled(true);
     		}
     	}
     }
@@ -186,6 +207,12 @@ class EventListener implements Listener {
     	}
     }
     
+    
+    /**
+     * @param PlayerDeathEvent $event
+     *
+     * @priority HIGHEST
+     */
     public function onPlayerDeath(PlayerDeathEvent $event){
     	$player = $event->getEntity();
     	CustomAlerts::getAPI()->setDeathMessage($event->getDeathMessage());
