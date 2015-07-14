@@ -31,12 +31,13 @@ With CustomAlerts you can customize or hide whitelist kick messages, outdated se
 - Customize Motd ***(from MCPE 0.11.0)***
 - Customize Outdated Server/Client kick messages ***(from MCPE 0.11.0 BUILD 11)***
 - Customize Whitelist kick messages ***(from MCPE 0.11.0 BUILD 11)***
+- Customize Full Server kick messages ***(from MCPE 0.11.0 BUILD 11)***
 
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- CustomAlerts_v1.4.phar : CustomAlerts Plugin + API*<br>
-*- CustomAlertsExample : Example Plugin source code*<br>
+*- CustomAlerts_v1.6.phar : CustomAlerts Plugin + API*<br>
+*- CustomAlertsExample_v1.2.zip : Example Plugin source code*<br>
 
 **Commands:**
 
@@ -123,7 +124,7 @@ OutdatedServer:
   message: "&cOops! Server outdated!"
 #Whitelisted Server message (available from MCPE 0.11.0 BUILD 11 and later)
 WhitelistedServer:
-  #Show custom  Whitelisted Server message
+  #Show custom Whitelisted Server message
   custom: true
   #Whitelisted Server message
   #Available Tags:
@@ -132,6 +133,16 @@ WhitelistedServer:
   # - {TIME}: Show current time
   # - {TOTALPLAYERS}: Show the number of all online players
   message: "&c&oThis Server is whitelisted!"
+#Full Server message (available from MCPE 0.11.0 BUILD 11 and later)
+FullServer:
+  #Show custom Full Server message
+  custom: true
+  #Available Tags:
+  # - {MAXPLAYERS}: Show the maximum number of players supported by the server
+  # - {PLAYER}: Show player name
+  # - {TIME}: Show current time
+  # - {TOTALPLAYERS}: Show the number of all online players
+  message: "&e{PLAYER}&b, The Server is full &c[{TOTALPLAYERS}/{MAXPLAYERS}]&b!\n&l&dTry to join later :)"
 #First Join message settings
 FirstJoin:
   #Enable First Join message
