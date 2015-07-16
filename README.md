@@ -31,7 +31,7 @@ With CustomAlerts you can customize or hide whitelist kick messages, outdated se
 - Customize Motd ***(from MCPE 0.11.0)***
 - Customize Outdated Server/Client kick messages ***(from MCPE 0.11.0 BUILD 11)***
 - Customize Whitelist kick messages ***(from MCPE 0.11.0 BUILD 11)***
-- Customize Full Server kick messages ***(from MCPE 0.11.0 BUILD 11)***
+- Customize Full Server kick messages ***(from MCPE 0.11.0 BUILD 11) [Please Keep in mind that if you have VIP or additional slots on your server you MUST disable this feature from config]***
 
 **What is included?**
 
