@@ -45,7 +45,7 @@ class EventListener implements Listener {
     	$player = $event->getPlayer();
     	$packet = $event->getPacket();
     	if($packet->pid() == Info::LOGIN_PACKET){
-    		if($packet->protocol1 < Info::CURRENT_PROTOCOL){
+    		if($packet->protocol < Info::CURRENT_PROTOCOL){
     			//Check if outdated client message is custom
     			if(CustomAlerts::getAPI()->isOutdatedClientMessageCustom()){
     				CustomAlerts::getAPI()->setOutdatedClientMessage(CustomAlerts::getAPI()->getDefaultOutdatedClientMessage($player));
@@ -57,7 +57,7 @@ class EventListener implements Listener {
     				$player->close("", CustomAlerts::getAPI()->getOutdatedClientMessage());
     				$event->setCancelled(true);
     			}
-    		}elseif($packet->protocol1 > Info::CURRENT_PROTOCOL){
+    		}elseif($packet->protocol > Info::CURRENT_PROTOCOL){
     			//Check if outdated server message is custom
     			if(CustomAlerts::getAPI()->isOutdatedServerMessageCustom()){
     				CustomAlerts::getAPI()->setOutdatedServerMessage(CustomAlerts::getAPI()->getDefaultOutdatedServerMessage($player));
