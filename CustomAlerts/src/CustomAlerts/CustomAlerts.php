@@ -127,7 +127,6 @@ class CustomAlerts extends PluginBase {
 	
     public function onEnable(){
     	@mkdir($this->getDataFolder());
-    	@mkdir($this->getDataFolder() . "data/");
     	$this->saveDefaultConfig();
     	$this->cfg = $this->getConfig()->getAll();
     	$this->getCommand("customalerts")->setExecutor(new Commands\Commands($this));
@@ -422,30 +421,6 @@ class CustomAlerts extends PluginBase {
     	$message = str_replace("{TOTALPLAYERS}", count($this->getServer()->getOnlinePlayers()), $message);
     	$message = str_replace("{TIME}", date($cfg["datetime-format"]), $message);
     	return $this->translateColors("&", $message);
-    }
-    
-    /**
-     * Register the first join of a player (don't use this function)
-     * @param Player $player
-     */
-    public function registerFirstJoin(Player $player){
-    	$cfg = new Config($this->getDataFolder() . "data/" . strtolower($player->getName() . ".dat"));
-    	$cfg->save();
-    }
-    
-    /**
-     * Check if a player has joined for the first time
-     * 
-     * @param Player $player
-     * 
-     * @return boolean
-     */
-    public function hasJoinedFirstTime(Player $player){
-    	if(file_exists($this->getDataFolder() . "data/" . strtolower($player->getName() . ".dat"))){
-    		return false;
-    	}else{
-    		return true;
-    	}
     }
     
     /**

@@ -130,9 +130,7 @@ class EventListener implements Listener {
     	$status = 0;
     	CustomAlerts::getAPI()->setJoinMessage($event->getJoinMessage());
     	//Get First Join
-    	if(CustomAlerts::getAPI()->hasJoinedFirstTime($player)){
-    		//Register FirstJoin
-    		CustomAlerts::getAPI()->registerFirstJoin($player);
+    	if(!$player->hasPlayedBefore()){
     		//Check if FirstJoin message is enabled
     		if(CustomAlerts::getAPI()->isDefaultFirstJoinMessageEnabled()){
     			CustomAlerts::getAPI()->setJoinMessage(CustomAlerts::getAPI()->getDefaultFirstJoinMessage($player));
