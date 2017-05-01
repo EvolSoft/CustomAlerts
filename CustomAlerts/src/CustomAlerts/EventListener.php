@@ -20,8 +20,8 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerPreLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\protocol\DataPacket;
-use pocketmine\network\protocol\Info;
+use pocketmine\network\mcpe\protocol\DataPacket;
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\Player;
 use pocketmine\Server;
 
@@ -44,8 +44,8 @@ class EventListener implements Listener {
     public function onReceivePacket(DataPacketReceiveEvent $event){
     	$player = $event->getPlayer();
     	$packet = $event->getPacket();
-    	if($packet->pid() == Info::LOGIN_PACKET){
-    		if($packet->protocol < Info::CURRENT_PROTOCOL){
+    	if($packet->pid() == ProtocolInfo::LOGIN_PACKET){
+    		if($packet->protocol < ProtocolInfo::CURRENT_PROTOCOL){
     			//Check if outdated client message is custom
     			if(CustomAlerts::getAPI()->isOutdatedClientMessageCustom()){
     				CustomAlerts::getAPI()->setOutdatedClientMessage(CustomAlerts::getAPI()->getDefaultOutdatedClientMessage($player));
@@ -57,7 +57,7 @@ class EventListener implements Listener {
     				$player->close("", CustomAlerts::getAPI()->getOutdatedClientMessage());
     				$event->setCancelled(true);
     			}
-    		}elseif($packet->protocol > Info::CURRENT_PROTOCOL){
+    		}elseif($packet->protocol > ProtocolInfo::CURRENT_PROTOCOL){
     			//Check if outdated server message is custom
     			if(CustomAlerts::getAPI()->isOutdatedServerMessageCustom()){
     				CustomAlerts::getAPI()->setOutdatedServerMessage(CustomAlerts::getAPI()->getDefaultOutdatedServerMessage($player));
