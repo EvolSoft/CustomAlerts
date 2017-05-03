@@ -41,7 +41,7 @@ class EventListener implements Listener {
         $this->plugin = $plugin;
     }
     
-    public function onReceivePacket(DataPacketReceiveEvent $event){
+    /*public function onReceivePacket(DataPacketReceiveEvent $event){
     	$player = $event->getPlayer();
     	$packet = $event->getPacket();
     	if($packet->pid() == ProtocolInfo::LOGIN_PACKET){
@@ -71,7 +71,7 @@ class EventListener implements Listener {
     			}
     		}
     	}
-    }
+    }*/
     
     /**
      * @param PlayerPreLoginEvent $event
