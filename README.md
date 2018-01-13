@@ -10,7 +10,7 @@ PocketMine-MP plugins
 
 ## Requirements
 
-PocketMine-MP 3.0.0-ALPHA5
+PocketMine-MP 1.7dev API 3.0.0-ALPHA7, 3.0.0-ALPHA8, 3.0.0-ALPHA9, 3.0.0-ALPHA10
 
 ## Overview
 
@@ -19,8 +19,6 @@ PocketMine-MP 3.0.0-ALPHA5
 **EvolSoft Website:** http://www.evolsoft.tk
 
 ***This Plugin uses the New API. You can't install it on old versions of PocketMine.***
-
-***To prevent bugs, delete all old plugin data if you are updating CustomAlerts.***
 
 With CustomAlerts you can customize or hide whitelist kick messages, outdated server/client messages, join/leave messages, first join messages, death messages, world change messages... (read documentation)
 
@@ -36,20 +34,18 @@ With CustomAlerts you can customize or hide whitelist kick messages, outdated se
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- CustomAlerts_v1.6.phar : CustomAlerts Plugin + API*<br>
-*- CustomAlertsExample_v1.2.zip : Example Plugin source code*<br>
+*- CustomAlerts_v1.8.phar : CustomAlerts Plugin + API*<br>
+*- CustomAlertsExample_v1.3.zip : Example Plugin source code*<br>
 
 **Commands:**
 
 ***/customalerts*** *- CustomAlerts commands*
 
-**To-Do:**
+## Donate
 
-<dd><i>- Bug fix (if bugs will be found)</i></dd>
+Support the development of this plugin with a small donation by clicking [:dollar: here](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=flavius.c.1999@gmail.com&lc=US&item_name=www.evolsoft.tk&no_note=0&cn=&curency_code=EUR&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted). Thank you :smile:
 
 ## Documentation
-
-#### For Users:
 
 **Text format (Available on PocketMine console and on MCPE v0.11.0 and later):**
 
@@ -379,7 +375,9 @@ Death:
 - <dd><i><b>customalerts.info</b> - CustomAlerts command Info permission.</i></dd>
 - <dd><i><b>customalerts.reload</b> - CustomAlerts command Reload permission.</i></dd>
 
-#### For Developers
+## API
+
+Almost all our plugins have API access to widely extend their features.
 
 **Basic Tutorial:**
 
@@ -416,16 +414,41 @@ if(CustomAlerts::getAPI()->getAPIVersion() == "(used API version)"){
 *5. Handle a CustomAlerts event (in this tutorial we will handle the CustomAlertsJoinEvent):*
 ```php
 public function onCAJoinEvent(CustomAlertsJoinEvent $event){
-  CustomAlerts::getAPI()->setJoinMessage("Example Join message: " . $event->getPlayer()->getName());
+  $event->setMessage("Example Join message: " . $event->getPlayer()->getName());
 }
 ```
-*6. Call the API function:*
+*6. Access the API by doing:*
 ```php
 CustomAlerts::getAPI()->api_function();
 ```
+
 ***A full plugin example using CustomAlerts API and CustomAlerts Events is included in the ZIP file.***
 
 **CustomAlerts API Events:**
+
+Each CustomAlerts event has two global functions:
+
+###### Set Message:
+
+```php
+setMessage($message);
+```
+
+**Description:**<br>
+Set event message.<br>
+**Parameters:**<br>
+*$message*
+
+###### Get Message:
+
+```php
+getMessage();
+```
+
+**Description:**<br>
+Get event message.<br>
+**Return:**<br>
+*string*
 
 ###### CustomAlertsDeathEvent:
 
@@ -628,7 +651,7 @@ The target level (instance of pocketmine\Level)
 string getVersion()
 ```
 **Description:**<br>
-Get CustomAlerts plugin version<br>
+Get CustomAlerts plugin version.<br>
 **Return:**<br>
 plugin version
 
@@ -648,34 +671,16 @@ boolean isMotdCustom()
 **Description:**<br>
 Check if motd message is custom.<br>
 **Return:**<br>
-*boolean*
+*bool*
 
 ###### Get default motd message:
-```php
-string getDefaultMotdMessage()
-```
-**Description:**<br>
-Get default motd message.<br>
-**Return:**<br>
-*string* the default motd message
-
-###### Get current motd message:
 ```php
 string getMotdMessage()
 ```
 **Description:**<br>
-Get current motd message.<br>
+Get motd message.<br>
 **Return:**<br>
-*string* the current motd message
-
-###### Set current motd message:
-```php
-function setMotdMessage($message)
-```
-**Description:**<br>
-Set current motd message.<br>
-**Parameters:**<br>
-*$message*
+*string*
 
 ###### Check if outdated client message is custom:
 ```php
@@ -684,36 +689,18 @@ boolean isOutdatedClientMessageCustom()
 **Description:**<br>
 Check if outdated client message is custom.<br>
 **Return:**<br>
-*boolean*
+*bool*
 
-###### Get default outdated client message:
+###### Get outdated client message:
 ```php
-string getDefaultOutdatedClientMessage(Player $player)
+string getOutdatedClientMessage(Player $player)
 ```
 **Description:**<br>
-Get default outdated client message.<br>
+Get outdated client message.<br>
 **Parameters:**<br>
 *$player* the current player<br>
 **Return:**<br>
-*string* the default outdated client message
-
-###### Get current outdated client message:
-```php
-string getOutdatedClientMessage()
-```
-**Description:**<br>
-Get current outdated client message.<br>
-**Return:**<br>
-*string* the current outdated client message
-
-###### Set current outdated client message:
-```php
-function setOutdatedClientMessage($message)
-```
-**Description:**<br>
-Set current outdated client message.<br>
-**Parameters:**<br>
-*$message*
+*string*
 
 ###### Check if outdated server message is custom:
 ```php
@@ -722,36 +709,18 @@ boolean isOutdatedServerMessageCustom()
 **Description:**<br>
 Check if outdated server message is custom.<br>
 **Return:**<br>
-*boolean*
+*bool*
 
-###### Get default outdated server message:
+###### Get outdated server message:
 ```php
-string getDefaultOutdatedServerMessage(Player $player)
+string getOutdatedServerMessage(Player $player)
 ```
 **Description:**<br>
-Get default outdated server message.<br>
+Get outdated server message.<br>
 **Parameters:**<br>
 *$player* the current player<br>
 **Return:**<br>
-*string* the default outdated server message
-
-###### Get current outdated server message:
-```php
-string getOutdatedServerMessage()
-```
-**Description:**<br>
-Get current outdated server message.<br>
-**Return:**<br>
-*string* the current outdated server message
-
-###### Set current outdated server message:
-```php
-function setOutdatedServerMessage($message)
-```
-**Description:**<br>
-Set current outdated server message.<br>
-**Parameters:**<br>
-*$message*
+*string*
 
 ###### Check if whitelist message is custom:
 ```php
@@ -760,36 +729,18 @@ boolean isWhitelistMessageCustom()
 **Description:**<br>
 Check if whitelist message is custom.<br>
 **Return:**<br>
-*boolean*
+*bool*
 
-###### Get default whitelist message:
+###### Get whitelist message:
 ```php
-string getDefaultWhitelistMessage(Player $player)
+string getWhitelistMessage(Player $player)
 ```
 **Description:**<br>
-Get default whitelist message.<br>
+Get whitelist message.<br>
 **Parameters:**<br>
 *$player* the current player<br>
 **Return:**<br>
-*string* the default whitelist message
-
-###### Get current whitelist message:
-```php
-string getWhitelistMessage()
-```
-**Description:**<br>
-Get current whitelist message.<br>
-**Return:**<br>
-*string* the current whitelist message
-
-###### Set current whitelist message:
-```php
-function setWhitelistMessage($message)
-```
-**Description:**<br>
-Set current whitelist message.<br>
-**Parameters:**<br>
-*$message*
+*string*
 
 ###### Check if full server message is custom:
 ```php
@@ -798,174 +749,109 @@ boolean isFullServerMessageCustom()
 **Description:**<br>
 Check if full server message is custom.<br>
 **Return:**<br>
-*boolean*
+*bool*
 
-###### Get default full server message:
+###### Get full server message:
 ```php
-string getDefaultFullServerMessage(Player $player)
+string getFullServerMessage(Player $player)
 ```
 **Description:**<br>
-Get default full server message.<br>
+Get full server message.<br>
 **Parameters:**<br>
 *$player* the current player<br>
 **Return:**<br>
-*string* the default full server message
+*string*
 
-###### Get current full server message:
+###### Check if first join message is enabled:
 ```php
-string getFullServerMessage()
+boolean isFirstJoinMessageEnabled()
 ```
 **Description:**<br>
-Get current full server message.<br>
+Check if first join message is enabled.<br>
 **Return:**<br>
-*string* the current full server message
+*bool*
 
-###### Set current full server message:
+###### Get first join message:
 ```php
-function setFullServerMessage($message)
+string getFirstJoinMessage(Player $player)
 ```
 **Description:**<br>
-Set current full server message.<br>
-**Parameters:**<br>
-*$message*
-
-###### Check if default first join message is enabled:
-```php
-boolean isDefaultFirstJoinMessageEnabled()
-```
-**Description:**<br>
-Check if default first join message is enabled.<br>
-**Return:**<br>
-*boolean*
-
-###### Get default first join message:
-```php
-string getDefaultFirstJoinMessage(Player $player)
-```
-**Description:**<br>
-Get default first join message.<br>
+Get first join message.<br>
 **Parameters:**<br>
 *$player* the current player<br>
 **Return:**<br>
-*string* the default first join message
+*string*
 
-###### Check if a player has joined for the first time:
+###### Check if join message is custom:
 ```php
-boolean hasJoinedFirstTime(Player $player)
+boolean isJoinMessageCustom()
 ```
 **Description:**<br>
-Check if a player has joined for the first time.<br>
-**Parameters:**<br>
-*$player*<br>
+Check if join message is custom.<br>
 **Return:**<br>
-*boolean*
+*bool*
 
-###### Check if default join message is custom:
+###### Check if join message is hidden:
 ```php
-boolean isDefaultJoinMessageCustom()
+boolean isJoinMessageHidden()
 ```
 **Description:**<br>
-Check if default join message is custom.<br>
+Check if join message is hidden.<br>
 **Return:**<br>
-*boolean*
+*bool*
 
-###### Check if default join message is hidden:
+###### Get join message:
 ```php
-boolean isDefaultJoinMessageHidden()
+string getJoinMessage(Player $player)
 ```
 **Description:**<br>
-Check if default join message is hidden.<br>
-**Return:**<br>
-*boolean*
-
-###### Get default join message:
-```php
-string getDefaultJoinMessage(Player $player)
-```
-**Description:**<br>
-Get default join message.<br>
+Get join message.<br>
 **Parameters:**<br>
 *$player* the current player<br>
 **Return:**<br>
-*string* the default join message
+*string*
 
-###### Get current join message:
+###### Check if quit message is custom:
 ```php
-string getJoinMessage()
+boolean isQuitMessageCustom()
 ```
 **Description:**<br>
-Get current join message.<br>
+Check if quit message is custom.<br>
 **Return:**<br>
-*string* the current join message
+*bool*
 
-###### Set current join message:
+###### Check if quit message is hidden:
 ```php
-function setJoinMessage($message)
+boolean isQuitMessageHidden()
 ```
 **Description:**<br>
-Set current join message.<br>
-**Parameters:**<br>
-*$message*
-
-###### Check if default quit message is custom:
-```php
-boolean isDefaultQuitMessageCustom()
-```
-**Description:**<br>
-Check if default quit message is custom.<br>
+Check if quit message is hidden.<br>
 **Return:**<br>
-*boolean*
+*bool*
 
-###### Check if default quit message is hidden:
+###### Get quit message:
 ```php
-boolean isDefaultQuitMessageHidden()
+string getQuitMessage(Player $player)
 ```
 **Description:**<br>
-Check if default quit message is hidden.<br>
-**Return:**<br>
-*boolean*
-
-###### Get default quit message:
-```php
-string getDefaultQuitMessage(Player $player)
-```
-**Description:**<br>
-Get default quit message.<br>
+Get quit message.<br>
 **Parameters:**<br>
 *$player* the current player<br>
 **Return:**<br>
-*string* the default quit message
+*string*
 
-###### Get current quit message:
+###### Check if world change message is enabled:
 ```php
-string getQuitMessage()
+boolean isWorldChangeMessageEnabled()
 ```
 **Description:**<br>
-Get current quit message.<br>
+Check if world change message is enabled.<br>
 **Return:**<br>
-*string* the current quit message
+*bool*
 
-###### Set current quit message:
+###### Get world change message:
 ```php
-function setQuitMessage($message)
-```
-**Description:**<br>
-Set current quit message.<br>
-**Parameters:**<br>
-*$message*
-
-###### Check if default world change message is enabled:
-```php
-boolean isDefaultWorldChangeMessageEnabled()
-```
-**Description:**<br>
-Check if default world change message is enabled.<br>
-**Return:**<br>
-*boolean*
-
-###### Get default world change message:
-```php
-string getDefaultWorldChangeMessage(Player $player, Level $origin, Level $target)
+string getWorldChangeMessage(Player $player, Level $origin, Level $target)
 ```
 **Description:**<br>
 Get default world change message.<br>
@@ -974,51 +860,33 @@ Get default world change message.<br>
 *$origin* the origin level<br>
 *$target* the target level<br>
 **Return:**<br>
-*string* the default world change message
+*string*
 
-###### Get current world change message:
+###### Check if death messages are custom:
 ```php
-string getWorldChangeMessage()
+boolean isDeathMessageCustom($cause = null)
 ```
 **Description:**<br>
-Get current world change message.<br>
-**Return:**<br>
-*string* the current world change message
-
-###### Set current world change message:
-```php
-function setWorldChangeMessage($message)
-```
-**Description:**<br>
-Set current world change message.<br>
-**Parameters:**<br>
-*$message*
-
-###### Check if default death messages are custom:
-```php
-boolean isDefaultDeathMessageCustom($cause = null)
-```
-**Description:**<br>
-Check if default death messages are custom.<br>
+Check if death messages are custom.<br>
 **Parameters:**<br>
 *$cause* Check message by cause<br>
 **Return:**<br>
 *boolean*
 
-###### Check if default death messages are hidden:
+###### Check if death messages are hidden:
 ```php
-boolean isDefaultDeathMessageHidden($cause = null)
+boolean isDeathMessageHidden($cause = null)
 ```
 **Description:**<br>
-Check if default death messages are hidden<br>
+Check if death messages are hidden.<br>
 **Parameters:**<br>
 *$cause* Check message by cause<br>
 **Return:**<br>
-*boolean*
+*bool*
 
-###### Get default death message related to the specified cause:
+###### Get death message for the specified cause:
 ```php
-string getDefaultDeathMessage(Player $player, $cause = null)
+string getDeathMessage(Player $player, $cause = null)
 ```
 **Description:**<br>
 Get default death message related to the specified cause.<br>
@@ -1026,22 +894,4 @@ Get default death message related to the specified cause.<br>
 *$player* the current player<br>
 *$cause* the cause of death (instanceof EntityDamageEvent). If it's null, the function will return the default death message
 **Return:**<br>
-*string* the default death message related to the specified cause
-
-###### Get current death message:
-```php
-string getDeathMessage()
-```
-**Description:**<br>
-Get current death message.<br>
-**Return:**<br>
-*string* the current death message
-
-###### Set current death message:
-```php
-function setDeathMessage($message)
-```
-**Description:**<br>
-Set current death message.<br>
-**Parameters:**<br>
-*$message*
+*string*

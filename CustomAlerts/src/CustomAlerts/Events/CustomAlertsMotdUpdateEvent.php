@@ -1,40 +1,22 @@
 <?php
 
 /*
- * CustomAlerts (v1.6) by EvolSoft
+ * CustomAlerts (v1.8) by EvolSoft
  * Developer: EvolSoft (Flavius12)
- * Website: http://www.evolsoft.tk
- * Date: 09/05/2015 01:21 PM (UTC)
- * Copyright & License: (C) 2014-2015 EvolSoft
+ * Website: https://www.evolsoft.tk
+ * Date: 13/01/2018 02:02 PM (UTC)
+ * Copyright & License: (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
 
 namespace CustomAlerts\Events;
 
-use pocketmine\event\plugin\PluginEvent;
-use pocketmine\Player;
-
-class CustomAlertsMotdUpdateEvent extends PluginEvent {
+class CustomAlertsMotdUpdateEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
 	/** @var string $pocketminemotd The default PocketMine motd message */
-	private $pocketminemessage;
-	
-	/**
-	 * @param string $pocketminemessage The default PocketMine motd message
-	 */
-	public function __construct($pocketminemessage){
-		$this->pocketminemessage = $pocketminemessage;
-	}
-	
-	/**
-	 * Get default PocketMine Motd message
-	 * 
-	 * @return string
-	 */
-	public function getPocketMineMotd(){
-		return $this->pocketminemessage;
-	}
+	private $pocketminemessage;	
+
+	public function __construct(){}
 }
-?>

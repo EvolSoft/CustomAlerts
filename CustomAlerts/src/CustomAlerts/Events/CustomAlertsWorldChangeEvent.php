@@ -1,21 +1,20 @@
 <?php
 
 /*
- * CustomAlerts (v1.6) by EvolSoft
+ * CustomAlerts (v1.8) by EvolSoft
  * Developer: EvolSoft (Flavius12)
- * Website: http://www.evolsoft.tk
- * Date: 09/05/2015 01:04 PM (UTC)
- * Copyright & License: (C) 2014-2015 EvolSoft
+ * Website: https://www.evolsoft.tk
+ * Date: 13/01/2018 02:01 PM (UTC)
+ * Copyright & License: (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
 
 namespace CustomAlerts\Events;
 
-use pocketmine\event\plugin\PluginEvent;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class CustomAlertsWorldChangeEvent extends PluginEvent {
+class CustomAlertsWorldChangeEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
@@ -44,7 +43,7 @@ class CustomAlertsWorldChangeEvent extends PluginEvent {
 	 *
 	 * @return Player
 	 */
-	public function getPlayer(){
+	public function getPlayer() : Player {
 		return $this->player;
 	}
 	
@@ -53,7 +52,7 @@ class CustomAlertsWorldChangeEvent extends PluginEvent {
 	 *
 	 * @return Level
 	 */
-	public function getOrigin(){
+	public function getOrigin() : Level {
 		return $this->origin;
 	}
 	
@@ -62,9 +61,7 @@ class CustomAlertsWorldChangeEvent extends PluginEvent {
 	 *
 	 * @return Level
 	 */
-	public function getTarget(){
+	public function getTarget() : Level {
 		return $this->target;
 	}
-	
 }
-?>

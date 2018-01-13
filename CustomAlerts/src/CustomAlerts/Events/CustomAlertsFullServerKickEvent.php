@@ -1,20 +1,19 @@
 <?php
 
 /*
- * CustomAlerts (v1.6) by EvolSoft
+ * CustomAlerts (v1.8) by EvolSoft
  * Developer: EvolSoft (Flavius12)
- * Website: http://www.evolsoft.tk
- * Date: 14/07/2015 01:33 PM (UTC)
- * Copyright & License: (C) 2014-2015 EvolSoft
+ * Website: https://www.evolsoft.tk
+ * Date: 13/01/2018 02:02 PM (UTC)
+ * Copyright & License: (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
 
 namespace CustomAlerts\Events;
 
-use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
 
-class CustomAlertsFullServerKickEvent extends PluginEvent {
+class CustomAlertsFullServerKickEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
@@ -33,8 +32,7 @@ class CustomAlertsFullServerKickEvent extends PluginEvent {
 	 * 
 	 * @return Player
 	 */
-	public function getPlayer(){
+	public function getPlayer() : Player {
 		return $this->player;
 	}
 }
-?>

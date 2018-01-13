@@ -1,22 +1,20 @@
 <?php
 
 /*
- * CustomAlerts (v1.6) by EvolSoft
+ * CustomAlerts (v1.8) by EvolSoft
  * Developer: EvolSoft (Flavius12)
- * Website: http://www.evolsoft.tk
- * Date: 09/05/2015 01:12 PM (UTC)
- * Copyright & License: (C) 2014-2015 EvolSoft
+ * Website: https://www.evolsoft.tk
+ * Date: 13/01/2018 02:02 PM (UTC)
+ * Copyright & License: (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
 
 namespace CustomAlerts\Events;
 
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\event\plugin\PluginEvent;
-use pocketmine\level\Level;
 use pocketmine\Player;
 
-class CustomAlertsDeathEvent extends PluginEvent {
+class CustomAlertsDeathEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
@@ -28,10 +26,9 @@ class CustomAlertsDeathEvent extends PluginEvent {
 	
 	/**
 	 * @param Player $player
-	 * @param Level $origin
-	 * @param Level $target
+	 * @param EntityDamageEvent $cause
 	 */
-	public function __construct(Player $player, $cause = null){
+	public function __construct(Player $player, EntityDamageEvent $cause = null){
 		$this->player = $player;
 		$this->cause = $cause;
 	}
@@ -41,7 +38,7 @@ class CustomAlertsDeathEvent extends PluginEvent {
 	 *
 	 * @return Player
 	 */
-	public function getPlayer(){
+	public function getPlayer() : Player {
 		return $this->player;
 	}
 	
@@ -50,9 +47,8 @@ class CustomAlertsDeathEvent extends PluginEvent {
 	 *
 	 * @return EntityDamageEvent|null
 	 */
-	public function getCause(){
+	public function getCause() : ?EntityDamageEvent {
 		return $this->cause;
 	}
 	
 }
-?>
