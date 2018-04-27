@@ -1,7 +1,7 @@
 <?php
 
 /*
- * CustomAlerts (v1.8) by EvolSoft
+ * CustomAlerts (v1.9) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: https://www.evolsoft.tk
  * Date: 13/01/2018 02:01 PM (UTC)

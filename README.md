@@ -10,7 +10,7 @@ PocketMine-MP plugins
 
 ## Requirements
 
-PocketMine-MP 1.7dev API 3.0.0-ALPHA7, 3.0.0-ALPHA8, 3.0.0-ALPHA9, 3.0.0-ALPHA10
+PocketMine-MP 1.7dev API 3.0.0-ALPHA7 -> 3.0.0-ALPHA12
 
 ## Overview
 
@@ -34,8 +34,8 @@ With CustomAlerts you can customize or hide whitelist kick messages, outdated se
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- CustomAlerts_v1.8.phar : CustomAlerts Plugin + API*<br>
-*- CustomAlertsExample_v1.3.zip : Example Plugin source code*<br>
+*- CustomAlerts_v1.9.phar : CustomAlerts Plugin + API*<br>
+*- CustomAlertsExample_v1.4.zip : Example Plugin source code*<br>
 
 **Commands:**
 

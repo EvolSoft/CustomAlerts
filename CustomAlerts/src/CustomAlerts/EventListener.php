@@ -1,10 +1,10 @@
 <?php
 
 /*
- * CustomAlerts (v1.8) by EvolSoft
+ * CustomAlerts (v1.9) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: https://www.evolsoft.tk
- * Date: 13/01/2018 02:01 PM (UTC)
+ * Date: 27/04/2018 02:29 PM (UTC)
  * Copyright & License: (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
@@ -38,31 +38,36 @@ class EventListener implements Listener {
         $this->plugin = $plugin;
     }
     
+    /**
+     * @param DataPacketReceiveEvent $event
+     *
+     * @priority HIGHEST
+     */
     public function onReceivePacket(DataPacketReceiveEvent $event){
     	$player = $event->getPlayer();
     	$packet = $event->getPacket();
     	if($packet instanceof LoginPacket){
     	    if($packet->protocol < ProtocolInfo::CURRENT_PROTOCOL){
-    	        //Outfated Client message
+    	        //Outdated Client message
     	        $cevent = new CustomAlertsOutdatedClientKickEvent($player);
     	        if($this->plugin->isOutdatedClientMessageCustom()){
     	            $cevent->setMessage($this->plugin->getOutdatedClientMessage($player));
     	        }
     	        $this->plugin->getServer()->getPluginManager()->callEvent($cevent);
     	        if($cevent->getMessage() != ""){
-    	            $player->close($cevent->getMessage());
+    	            $player->close($cevent->getMessage(), $cevent->getMessage());
     	            $event->setCancelled(true);
     	            return;
     	        }
     	    }else if($packet->protocol > ProtocolInfo::CURRENT_PROTOCOL){
-    	        //Outfated Server message
+    	        //Outdated Server message
     	        $cevent = new CustomAlertsOutdatedServerKickEvent($player);
     	        if($this->plugin->isOutdatedServerMessageCustom()){
     	            $cevent->setMessage($this->plugin->getOutdatedServerMessage($player));
     	        }
     	        $this->plugin->getServer()->getPluginManager()->callEvent($cevent);
     	        if($cevent->getMessage() != ""){
-    	            $player->close($cevent->getMessage());
+    	            $player->close($cevent->getMessage(), $cevent->getMessage());
     	            $event->setCancelled(true);
     	            return;
     	        }
