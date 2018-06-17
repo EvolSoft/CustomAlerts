@@ -4,8 +4,8 @@
  * CustomAlerts (v1.6) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 05/06/2015 10:51 AM (UTC)
- * Copyright & License: (C) 2014-2015 EvolSoft
+ * Date: 17/06/2018 01:04 PM (UTC)
+ * Copyright & License: (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
 
