@@ -3,7 +3,7 @@
 /*
  * CustomAlerts (v1.9) by EvolSoft
  * Developer: EvolSoft (Flavius12)
- * Website: http://www.evolsoft.tk
+ * Website: https://www.evolsoft.tk
  * Date: 17/06/2018 01:04 PM (UTC)
  * Copyright & License: (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
