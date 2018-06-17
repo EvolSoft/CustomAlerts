@@ -1,26 +1,42 @@
 <?php
 
 /*
- * CustomAlerts (v1.9) by EvolSoft
+ * CustomAlerts (v1.6) by EvolSoft
  * Developer: EvolSoft (Flavius12)
- * Website: https://www.evolsoft.tk
- * Date: 13/01/2018 02:01 PM (UTC)
- * Copyright & License: (C) 2014-2018 EvolSoft
+ * Website: http://www.evolsoft.tk
+ * Date: 05/06/2015 10:51 AM (UTC)
+ * Copyright & License: (C) 2014-2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
 
 namespace CustomAlerts;
 
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
+use pocketmine\utils\TextFormat;
 
-class MotdTask extends PluginTask {
-	
-    public function __construct(CustomAlerts $plugin){
-    	parent::__construct($plugin);
-    }
-    
-    public function onRun($tick){
-        $plugin = $this->getOwner();
-        CustomAlerts::getAPI()->updateMotd();
-    }
+use CustomAlerts\Events\CustomAlertsMotdUpdateEvent;
+
+class MotdTask extends Task{
+
+	private $plugin;
+	private $counter;
+
+	public function __construct(CustomAlerts $plugin){
+
+		$this->plugin = $plugin;
+		$this->counter = 0;
+                     }
+
+	public function onRun(int $tick){
+		$cfg = $this->plugin->getConfig()->getAll();
+		$this->counter += 1;
+		if($this->counter >= $cfg["Motd"]["update-timeout"]){
+			//Check if Motd message is custom
+			if(CustomAlerts::getAPI()->isMotdCustom()){
+				CustomAlerts::getAPI()->setMotdMessage(CustomAlerts::getAPI()->getDefaultMotdMessage());
+			}
+			$this->plugin->getServer()->getPluginManager()->callEvent(new CustomAlertsMotdUpdateEvent($this->plugin->getServer()->getMotd()));
+			$this->counter = 0;
+		}
+	}
 }
