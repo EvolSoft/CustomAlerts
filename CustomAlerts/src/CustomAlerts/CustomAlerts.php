@@ -19,6 +19,7 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
+use pocketmine\scheduler\Task;
 
 use CustomAlerts\Events\CustomAlertsMotdUpdateEvent;
 
@@ -82,7 +83,7 @@ class CustomAlerts extends PluginBase {
     	$this->cfg = $this->getConfig()->getAll();
     	$this->getCommand("customalerts")->setExecutor(new Commands\Commands($this));
     	$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-    	$this->getServer()->getScheduler()->scheduleRepeatingTask(new MotdTask($this), 20);
+    	$this->getScheduler()->scheduleRepeatingTask(new MotdTask($this), 20);
     }
     
     /**
