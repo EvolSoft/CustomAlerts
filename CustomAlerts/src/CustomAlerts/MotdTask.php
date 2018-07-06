@@ -11,16 +11,22 @@
 
 namespace CustomAlerts;
 
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
+use pocketmine\plugin\PluginBase;
+use pocketmine\plugin\Plugin;
 
-class MotdTask extends PluginTask {
+class MotdTask extends Task{
+   private $plugin;
 	
     public function __construct(CustomAlerts $plugin){
-    	parent::__construct($plugin);
+      $this->plugin = $plugin;
     }
     
     public function onRun($tick){
-        $plugin = $this->getOwner();
         CustomAlerts::getAPI()->updateMotd();
+    }
+
+    public function getPlugin(){
+        return $this->plugin;
     }
 }

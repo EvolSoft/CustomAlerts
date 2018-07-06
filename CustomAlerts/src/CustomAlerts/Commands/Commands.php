@@ -12,16 +12,18 @@
 namespace CustomAlerts\Commands;
 
 use pocketmine\command\Command;
+use pocketmine\command\PluginCommand;
 use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginBase;
+use pocketmine\plugin\Plugin;
 
 use CustomAlerts\CustomAlerts;
 
-class Commands extends PluginBase implements CommandExecutor {
+class Commands extends PluginCommand implements CommandExecutor {
 
 	public function __construct(CustomAlerts $plugin){
-        $this->plugin = $plugin;
+       $this->plugin = $plugin;
     }
     
     public function onCommand(CommandSender $sender, Command $cmd, $label, array $args) : bool {
