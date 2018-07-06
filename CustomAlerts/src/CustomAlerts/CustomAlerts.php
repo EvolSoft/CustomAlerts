@@ -1,26 +1,24 @@
 <?php
 
 /*
- * CustomAlerts (v1.9) by EvolSoft
- * Developer: EvolSoft (Flavius12)
+ * CustomAlerts v2.0 by EvolSoft
+ * Developer: Flavius12
  * Website: https://www.evolsoft.tk
- * Date: 13/01/2018 02:01 PM (UTC)
- * Copyright & License: (C) 2014-2018 EvolSoft
+ * Copyright (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
 
 namespace CustomAlerts;
 
+use pocketmine\Player;
 use pocketmine\entity\Living;
 use pocketmine\event\entity\EntityDamageByBlockEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\level\Level;
-use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
-use pocketmine\scheduler\Task;
 
+use CustomAlerts\Commands\Commands;
 use CustomAlerts\Events\CustomAlertsMotdUpdateEvent;
 
 class CustomAlerts extends PluginBase {
@@ -36,41 +34,6 @@ class CustomAlerts extends PluginBase {
 	/** @var CustomAlerts $instance */
 	private static $instance = null;
 	
-	/**
-	 * Translate Minecraft colors
-	 * 
-	 * @param string $symbol
-	 * @param string $message
-	 * 
-	 * @return string
-	 */
-	public function translateColors($symbol, $message){
-	    $message = str_replace($symbol . "0", TextFormat::BLACK, $message);
-	    $message = str_replace($symbol . "1", TextFormat::DARK_BLUE, $message);
-	    $message = str_replace($symbol . "2", TextFormat::DARK_GREEN, $message);
-	    $message = str_replace($symbol . "3", TextFormat::DARK_AQUA, $message);
-	    $message = str_replace($symbol . "4", TextFormat::DARK_RED, $message);
-	    $message = str_replace($symbol . "5", TextFormat::DARK_PURPLE, $message);
-	    $message = str_replace($symbol . "6", TextFormat::GOLD, $message);
-	    $message = str_replace($symbol . "7", TextFormat::GRAY, $message);
-	    $message = str_replace($symbol . "8", TextFormat::DARK_GRAY, $message);
-	    $message = str_replace($symbol . "9", TextFormat::BLUE, $message);
-	    $message = str_replace($symbol . "a", TextFormat::GREEN, $message);
-	    $message = str_replace($symbol . "b", TextFormat::AQUA, $message);
-	    $message = str_replace($symbol . "c", TextFormat::RED, $message);
-	    $message = str_replace($symbol . "d", TextFormat::LIGHT_PURPLE, $message);
-	    $message = str_replace($symbol . "e", TextFormat::YELLOW, $message);
-	    $message = str_replace($symbol . "f", TextFormat::WHITE, $message);
-	    
-	    $message = str_replace($symbol . "k", TextFormat::OBFUSCATED, $message);
-	    $message = str_replace($symbol . "l", TextFormat::BOLD, $message);
-	    $message = str_replace($symbol . "m", TextFormat::STRIKETHROUGH, $message);
-	    $message = str_replace($symbol . "n", TextFormat::UNDERLINE, $message);
-	    $message = str_replace($symbol . "o", TextFormat::ITALIC, $message);
-	    $message = str_replace($symbol . "r", TextFormat::RESET, $message);
-	    return $message;
-	}
-	
 	public function onLoad(){
 	    if(!self::$instance instanceof CustomAlerts){
 	        self::$instance = $this;
@@ -81,7 +44,7 @@ class CustomAlerts extends PluginBase {
     	@mkdir($this->getDataFolder());
     	$this->saveDefaultConfig();
     	$this->cfg = $this->getConfig()->getAll();
-    	$this->getCommand("customalerts")->setExecutor(new Commands\Commands($this));
+    	$this->getCommand("customalerts")->setExecutor(new Commands($this));
     	$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     	$this->getScheduler()->scheduleRepeatingTask(new MotdTask($this), 20);
     }
@@ -145,7 +108,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getMotdMessage(){
-        return $this->translateColors("&", $this->replaceVars($this->cfg["Motd"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["Motd"]["message"], array(
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
@@ -179,7 +142,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getOutdatedClientMessage(Player $player){
-        return $this->translateColors("&", $this->replaceVars($this->cfg["OutdatedClient"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["OutdatedClient"]["message"], array(
             "PLAYER" => $player->getName(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
@@ -203,7 +166,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getOutdatedServerMessage(Player $player){
-        return $this->translateColors("&", $this->replaceVars($this->cfg["OutdatedServer"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["OutdatedServer"]["message"], array(
             "PLAYER" => $player->getName(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
@@ -227,7 +190,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getWhitelistMessage(Player $player){
-        return $this->translateColors("&", $this->replaceVars($this->cfg["WhitelistedServer"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["WhitelistedServer"]["message"], array(
             "PLAYER" => $player->getName(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
@@ -252,7 +215,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getFullServerMessage(Player $player){
-        return $this->translateColors("&", $this->replaceVars($this->cfg["FullServer"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["FullServer"]["message"], array(
             "PLAYER" => $player->getName(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
@@ -276,7 +239,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getFirstJoinMessage(Player $player){
-        return $this->translateColors("&", $this->replaceVars($this->cfg["FirstJoin"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["FirstJoin"]["message"], array(
             "PLAYER" => $player->getName(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
@@ -309,7 +272,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getJoinMessage(Player $player){
-        return $this->translateColors("&", $this->replaceVars($this->cfg["Join"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["Join"]["message"], array(
             "PLAYER" => $player->getName(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
@@ -342,7 +305,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getQuitMessage(Player $player){
-        return $this->translateColors("&", $this->replaceVars($this->cfg["Quit"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["Quit"]["message"], array(
             "PLAYER" => $player->getName(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
@@ -368,7 +331,7 @@ class CustomAlerts extends PluginBase {
      * @return string
      */
     public function getWorldChangeMessage(Player $player, Level $origin, Level $target){
-    	return $this->translateColors("&", $this->replaceVars($this->cfg["WorldChange"]["message"], array(
+        return TextFormat::colorize($this->replaceVars($this->cfg["WorldChange"]["message"], array(
     	    "ORIGIN" => $origin->getName(),
     	    "TARGET" => $target->getName(),
     	    "PLAYER" => $player->getName(),
@@ -545,6 +508,6 @@ class CustomAlerts extends PluginBase {
                     break;
             }
         }
-        return $this->translateColors("&", $this->replaceVars($message, $array));
+        return TextFormat::colorize($this->replaceVars($message, $array));
     }
 }

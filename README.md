@@ -10,7 +10,7 @@ PocketMine-MP plugins
 
 ## Requirements
 
-PocketMine-MP 1.7dev API 3.0.0-ALPHA7 -> 3.0.0-ALPHA12
+PocketMine-MP API 3.0.0
 
 ## Overview
 
@@ -34,8 +34,8 @@ With CustomAlerts you can customize or hide whitelist kick messages, outdated se
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- CustomAlerts_v1.9.phar : CustomAlerts Plugin + API*<br>
-*- CustomAlertsExample_v1.4.zip : Example Plugin source code*<br>
+*- CustomAlerts_v2.phar : CustomAlerts Plugin + API*<br>
+*- CustomAlertsExample_v1.5.zip : Example Plugin source code*<br>
 
 **Commands:**
 
@@ -43,7 +43,8 @@ In the ZIP file you will find:<br>
 
 ## Donate
 
-Support the development of this plugin with a small donation by clicking [:dollar: here](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=flavius.c.1999@gmail.com&lc=US&item_name=www.evolsoft.tk&no_note=0&cn=&curency_code=EUR&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted). Thank you :smile:
+Please support the development of this plugin with a small donation by clicking [:dollar: here](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=flavius.c.1999@gmail.com&lc=US&item_name=www.evolsoft.tk&no_note=0&cn=&curency_code=EUR&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted). 
+Your small donation will help me paying web hosting, domains, buying programs (such as IDEs, debuggers, etc...) and new hardware to improve software development. Thank you :smile:
 
 ## Documentation
 

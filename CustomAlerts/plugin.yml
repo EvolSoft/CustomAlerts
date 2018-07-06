@@ -1,6 +1,6 @@
 name: CustomAlerts
 main: CustomAlerts\CustomAlerts
-version: 1.9
+version: 2.0
 api: [3.0.0]
 load: STARTUP
 author: EvolSoft

@@ -1,11 +1,10 @@
 <?php
 
 /*
- * CustomAlerts (v1.9) by EvolSoft
- * Developer: EvolSoft (Flavius12)
+ * CustomAlerts v2.0 by EvolSoft
+ * Developer: Flavius12
  * Website: https://www.evolsoft.tk
- * Date: 13/01/2018 02:02 PM (UTC)
- * Copyright & License: (C) 2014-2018 EvolSoft
+ * Copyright (C) 2014-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/CustomAlerts/blob/master/LICENSE)
  */
 
