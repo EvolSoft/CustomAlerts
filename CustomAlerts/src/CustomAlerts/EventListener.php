@@ -122,7 +122,7 @@ class EventListener implements Listener {
     	//Join Message
     	$cevent = new CustomAlertsJoinEvent($player);
     	if(!$player->hasPlayedBefore() && $this->plugin->isFirstJoinMessageEnabled()){
-    		$cevent->setMessage($this->plugin->getMotdMessage());
+    		$cevent->setMessage($this->plugin->getFirstJoinMessage($player));
     	}else if($this->plugin->isJoinMessageHidden()){
     	    $cevent->setMessage("");
     	}else if($this->plugin->isJoinMessageCustom()){
