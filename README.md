@@ -3,6 +3,7 @@
 # CustomAlerts
 
 Customize or hide alerts (join/leave messages, whitelist messages, outdated server/client messages, etc...) plugin for PocketMine-MP
+This repo is made for API 4.0.0
 
 [![Download!](https://user-images.githubusercontent.com/10297075/101246002-cb046780-3710-11eb-950f-ba06934b8138.png)](http://gestyy.com/er3sEQ)
 
@@ -12,7 +13,7 @@ PocketMine-MP plugins
 
 ## Requirements
 
-PocketMine-MP API 3.0.0
+PocketMine-MP API 4.0.0
 
 ## Overview
 
