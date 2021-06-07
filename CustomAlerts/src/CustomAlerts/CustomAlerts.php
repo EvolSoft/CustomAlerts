@@ -116,7 +116,7 @@ class CustomAlerts extends PluginBase {
     }
     
     public function updateMotd(){
-        $cevent = new CustomAlertsMotdUpdateEvent();
+        $cevent = new CustomAlertsMotdUpdateEvent($this);
         if($this->isMotdCustom()){
             $cevent->setMessage($this->getMotdMessage());
         }else{
