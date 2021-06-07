@@ -10,28 +10,30 @@
 
 namespace CustomAlerts\Events;
 
-use pocketmine\Player;
+use pocketmine\player\PlayerInfo;
+use pocketmine\plugin\Plugin;
 
 class CustomAlertsWhitelistKickEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
-	/** @var Player $player */
+	/** @var PlayerInfo $player */
 	private $player;
 	
 	/**
-	 * @param Player $player
+	 * @param PlayerInfo $player
 	 */
-	public function __construct(Player $player){
+	public function __construct(Plugin $plugin, PlayerInfo $player){
+		parent::__construct($plugin);
 		$this->player = $player;
 	}
 
 	/**
 	 * Get whitelist kick event player
 	 * 
-	 * @return Player
+	 * @return PlayerInfo
 	 */
-	public function getPlayer() : Player {
+	public function getPlayer() : PlayerInfo {
 		return $this->player;
 	}
 }

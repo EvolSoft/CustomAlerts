@@ -10,11 +10,12 @@
 
 namespace CustomAlerts;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\entity\Living;
 use pocketmine\event\entity\EntityDamageByBlockEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\level\Level;
+use pocketmine\player\PlayerInfo;
+use pocketmine\world\World;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 
@@ -27,24 +28,24 @@ class CustomAlerts extends PluginBase {
 	const PREFIX = "&b[&aCustom&cAlerts&b] ";
 	
 	/** @var string */
-	const API_VERSION = "2.0";
+	const API_VERSION = "4.0";
+
+	public $cfg;
 	
-	private $cfg;
+	/** @var null|CustomAlerts $instance */
+	private static ?CustomAlerts $instance = null;
 	
-	/** @var CustomAlerts $instance */
-	private static $instance = null;
-	
-	public function onLoad(){
+	public function onLoad(): void{
 	    if(!self::$instance instanceof CustomAlerts){
 	        self::$instance = $this;
 	    }
 	}
 	
-    public function onEnable(){
+    public function onEnable(): void{
     	@mkdir($this->getDataFolder());
     	$this->saveDefaultConfig();
     	$this->cfg = $this->getConfig()->getAll();
-    	$this->getCommand("customalerts")->setExecutor(new Commands($this));
+    	$this->getServer()->getCommandMap()->register("customalerts", new Commands($this));
     	$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     	$this->getScheduler()->scheduleRepeatingTask(new MotdTask($this), 20);
     }
@@ -121,7 +122,7 @@ class CustomAlerts extends PluginBase {
         }else{
             $cevent->setMessage($this->getServer()->getMotd());
         }
-        $this->getServer()->getPluginManager()->callEvent($cevent);
+        $cevent->call();
         $this->getServer()->getNetwork()->setName($cevent->getMessage());
     }
     
@@ -141,9 +142,9 @@ class CustomAlerts extends PluginBase {
      *
      * @return string
      */
-    public function getOutdatedClientMessage(Player $player){
+    public function getOutdatedClientMessage(PlayerInfo $player){
         return TextFormat::colorize($this->replaceVars($this->cfg["OutdatedClient"]["message"], array(
-            "PLAYER" => $player->getName(),
+            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
@@ -165,9 +166,9 @@ class CustomAlerts extends PluginBase {
      *
      * @return string
      */
-    public function getOutdatedServerMessage(Player $player){
+    public function getOutdatedServerMessage(PlayerInfo $player){
         return TextFormat::colorize($this->replaceVars($this->cfg["OutdatedServer"]["message"], array(
-            "PLAYER" => $player->getName(),
+            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
@@ -189,9 +190,9 @@ class CustomAlerts extends PluginBase {
      *
      * @return string
      */
-    public function getWhitelistMessage(Player $player){
+    public function getWhitelistMessage(PlayerInfo $player){
         return TextFormat::colorize($this->replaceVars($this->cfg["WhitelistedServer"]["message"], array(
-            "PLAYER" => $player->getName(),
+            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
@@ -214,9 +215,9 @@ class CustomAlerts extends PluginBase {
      *
      * @return string
      */
-    public function getFullServerMessage(Player $player){
+    public function getFullServerMessage(PlayerInfo $player){
         return TextFormat::colorize($this->replaceVars($this->cfg["FullServer"]["message"], array(
-            "PLAYER" => $player->getName(),
+            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
@@ -325,15 +326,15 @@ class CustomAlerts extends PluginBase {
      * Get world change message
      *
      * @param Player $player
-     * @param Level $origin
-     * @param Level $target
+     * @param World $origin
+     * @param World $target
      *
      * @return string
      */
-    public function getWorldChangeMessage(Player $player, Level $origin, Level $target){
+    public function getWorldChangeMessage(Player $player, World $origin, World $target){
         return TextFormat::colorize($this->replaceVars($this->cfg["WorldChange"]["message"], array(
-    	    "ORIGIN" => $origin->getName(),
-    	    "TARGET" => $target->getName(),
+    	    "ORIGIN" => $origin->getDisplayName(),
+    	    "TARGET" => $target->getDisplayName(),
     	    "PLAYER" => $player->getName(),
     	    "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
     	    "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
@@ -342,9 +343,6 @@ class CustomAlerts extends PluginBase {
     
     /**
      * Check if death messages are custom
-     * 
-     * @param EntityDeathEvent $cause
-     *
      * @return bool
      */
     public function isDeathMessageCustom(EntityDamageEvent $cause = null){

@@ -10,7 +10,8 @@
 
 namespace CustomAlerts\Events;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
+use pocketmine\plugin\Plugin;
 
 class CustomAlertsQuitEvent extends CustomAlertsEvent {
 	
@@ -22,7 +23,8 @@ class CustomAlertsQuitEvent extends CustomAlertsEvent {
 	/**
 	 * @param Player $player
 	 */
-	public function __construct(Player $player){
+	public function __construct(Plugin $plugin, Player $player){
+		parent::__construct($plugin);
 		$this->player = $player;
 	}
 	

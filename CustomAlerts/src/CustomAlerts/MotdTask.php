@@ -15,13 +15,13 @@ use pocketmine\scheduler\Task;
 class MotdTask extends Task {
     
     /** @var CustomAlerts */
-    private $plugin;
+    private CustomAlerts $plugin;
 	
     public function __construct(CustomAlerts $plugin){
       $this->plugin = $plugin;
     }
     
-    public function onRun($tick){
+    public function onRun(): void{
         CustomAlerts::getAPI()->updateMotd();
     }
 

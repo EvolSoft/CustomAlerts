@@ -10,9 +10,13 @@
 
 namespace CustomAlerts\Events;
 
+use pocketmine\plugin\Plugin;
+
 class CustomAlertsMotdUpdateEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 
-	public function __construct(){}
+	public function __construct(Plugin $plugin){
+		parent::__construct($plugin);
+	}
 }

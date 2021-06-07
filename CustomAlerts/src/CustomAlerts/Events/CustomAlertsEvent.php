@@ -11,13 +11,18 @@
 namespace CustomAlerts\Events;
 
 use pocketmine\event\plugin\PluginEvent;
+use pocketmine\plugin\Plugin;
 
-abstract class CustomAlertsEvent extends PluginEvent {
+abstract class CustomAlertsEvent extends PluginEvent{
     
     /** @var string */
     private $message;
-    
-    /**
+
+    public function __construct(Plugin $plugin) {
+    	parent::__construct($plugin);
+    }
+
+	/**
      * Get event message
      * 
      * @return string

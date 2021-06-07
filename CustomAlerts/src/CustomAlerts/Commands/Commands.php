@@ -11,20 +11,26 @@
 namespace CustomAlerts\Commands;
 
 use pocketmine\command\Command;
-use pocketmine\command\PluginCommand;
-use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
+use pocketmine\plugin\PluginOwned;
+use pocketmine\plugin\PluginOwnedTrait;
 use pocketmine\utils\TextFormat;
 
 use CustomAlerts\CustomAlerts;
 
-class Commands extends PluginCommand implements CommandExecutor {
+class Commands extends Command implements PluginOwned {
+
+	use PluginOwnedTrait;
+
+	private CustomAlerts $plugin;
 
 	public function __construct(CustomAlerts $plugin){
-       $this->plugin = $plugin;
+		parent::__construct("customalerts");
+       	$this->plugin = $plugin;
+       	$this->setPermission("customalerts.help");
     }
     
-    public function onCommand(CommandSender $sender, Command $cmd, $label, array $args) : bool {
+    public function execute(CommandSender $sender, string $commandLabel, array $args){
 		if(isset($args[0])){
 			$args[0] = strtolower($args[0]);
 			switch($args[0]){
@@ -55,7 +61,7 @@ class Commands extends PluginCommand implements CommandExecutor {
 			        $sender->sendMessage(TextFormat::colorize("&cYou don't have permissions to use this command"));
 			        break;
 			}
-			return true;
+			return;
 		}
 		help:
 		if($sender->hasPermission("customalerts.help")){
@@ -66,6 +72,6 @@ class Commands extends PluginCommand implements CommandExecutor {
 		}else{
 		    $sender->sendMessage(TextFormat::colorize("&cYou don't have permissions to use this command"));
 		}
-    	return true;
+    	return;
     }
 }
