@@ -142,9 +142,9 @@ class CustomAlerts extends PluginBase {
      *
      * @return string
      */
-    public function getOutdatedClientMessage(Player $player){
+    public function getOutdatedClientMessage(PlayerInfo $player){
         return TextFormat::colorize($this->replaceVars($this->cfg["OutdatedClient"]["message"], array(
-            "PLAYER" => $player->getName(),
+            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
@@ -166,9 +166,9 @@ class CustomAlerts extends PluginBase {
      *
      * @return string
      */
-    public function getOutdatedServerMessage(Player $player){
+    public function getOutdatedServerMessage(PlayerInfo $player){
         return TextFormat::colorize($this->replaceVars($this->cfg["OutdatedServer"]["message"], array(
-            "PLAYER" => $player->getName(),
+            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));

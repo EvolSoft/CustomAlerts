@@ -10,30 +10,46 @@
 
 namespace CustomAlerts\Events;
 
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 
-class CustomAlertsOutdatedClientKickEvent extends CustomAlertsEvent {
+class CustomAlertsDeathEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
 	/** @var Player $player */
 	private $player;
 	
+	/** @var EntityDamageEvent|null $cause */
+	private $cause;
+	
 	/**
 	 * @param Player $player
+	 * @param EntityDamageEvent $cause
 	 */
-	public function __construct(Plugin $plugin, Player $player){
+	public function __construct(Plugin $plugin, Player $player, EntityDamageEvent $cause) {
 		parent::__construct($plugin);
 		$this->player = $player;
+		$this->cause = $cause;
 	}
 
 	/**
-	 * Get outdated client kick event player
-	 * 
+	 * Get death event player
+	 *
 	 * @return Player
 	 */
 	public function getPlayer() : Player {
 		return $this->player;
 	}
+	
+	/**
+	 * Get death event cause
+	 *
+	 * @return EntityDamageEvent|null
+	 */
+	public function getCause() : ?EntityDamageEvent {
+		return $this->cause;
+	}
+	
 }

@@ -10,7 +10,6 @@
 
 namespace CustomAlerts;
 
-use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -51,7 +50,7 @@ class EventListener implements Listener {
     	if($packet instanceof LoginPacket){
     	    if($packet->protocol < ProtocolInfo::CURRENT_PROTOCOL){
     	        //Outdated Client message
-    	        $cevent = new CustomAlertsOutdatedClientKickEvent($this->plugin, $player);
+    	        $cevent = new CustomAlertsOutdatedClientKickEvent($player);
     	        if($this->plugin->isOutdatedClientMessageCustom()){
     	            $cevent->setMessage($this->plugin->getOutdatedClientMessage($player));
     	        }
@@ -63,7 +62,7 @@ class EventListener implements Listener {
     	        }
     	    }else if($packet->protocol > ProtocolInfo::CURRENT_PROTOCOL){
     	        //Outdated Server message
-    	        $cevent = new CustomAlertsOutdatedServerKickEvent($this->plugin, $player);
+    	        $cevent = new CustomAlertsOutdatedServerKickEvent($player);
     	        if($this->plugin->isOutdatedServerMessageCustom()){
     	            $cevent->setMessage($this->plugin->getOutdatedServerMessage($player));
     	        }
@@ -87,25 +86,27 @@ class EventListener implements Listener {
     	if(count($this->plugin->getServer()->getOnlinePlayers()) - 1 < $this->plugin->getServer()->getMaxPlayers()){
     	    //Whitelist Message
     		if(!$this->plugin->getServer()->isWhitelisted($player->getUsername())){
-    		    $cevent = new CustomAlertsWhitelistKickEvent($this->plugin, $player);
+    		    $cevent = new CustomAlertsWhitelistKickEvent($player);
     			if($this->plugin->isWhitelistMessageCustom()){
     				$cevent->setMessage($this->plugin->getWhitelistMessage($player));
     			}
-    			$cevent->call();
+    			$this->plugin->getServer()->getPluginManager()->callEvent($cevent);
     			if($cevent->getMessage() != ""){
-    				$event->setKickReason(0, $cevent->getMessage());
+    				$player->close("", $cevent->getMessage());
+    				$event->setCancelled(true);
     				return;
     			}
     		}
     	}else{
     		//Full Server Message
-    		$cevent = new CustomAlertsFullServerKickEvent($this->plugin, $player);
+    		$cevent = new CustomAlertsFullServerKickEvent($player);
     		if($this->plugin->isFullServerMessageCustom()){
-    			$cevent->setMessage($this->plugin->getFullServerMessage($player));
+    			$cevent->setMesssage($this->plugin->getFullServerMessage($player));
     		}    		
-    		$cevent->call();
+    		$this->plugin->getServer()->getPluginManager()->callEvent($cevent);
     		if($cevent->getMessage() != ""){
-				$event->setKickReason(0, $cevent->getMessage());
+    			$player->close("", $cevent->getMessage());
+    			$event->setCancelled(true);
     			return;
     		}
     	}
@@ -121,7 +122,7 @@ class EventListener implements Listener {
     	//Motd Update
     	$this->plugin->updateMotd();
     	//Join Message
-    	$cevent = new CustomAlertsJoinEvent($this->plugin, $player);
+    	$cevent = new CustomAlertsJoinEvent($player);
     	if(!$player->hasPlayedBefore() && $this->plugin->isFirstJoinMessageEnabled()){
     		$cevent->setMessage($this->plugin->getFirstJoinMessage($player));
     	}else if($this->plugin->isJoinMessageHidden()){
@@ -131,7 +132,7 @@ class EventListener implements Listener {
     	}else{
     	    $cevent->setMessage($event->getJoinMessage());
     	}
-    	$cevent->call();
+    	$this->plugin->getServer()->getPluginManager()->callEvent($cevent);
     	$event->setJoinMessage($cevent->getMessage());
     }
     
@@ -145,7 +146,7 @@ class EventListener implements Listener {
     	 //Motd Update
     	 $this->plugin->updateMotd();
     	 //Quit Message
-    	 $cevent = new CustomAlertsQuitEvent($this->plugin, $player);
+    	 $cevent = new CustomAlertsQuitEvent($player);
     	 if($this->plugin->isQuitMessageHidden()){
     	     $cevent->setMessage("");
     	 }else if($this->plugin->isQuitMessageCustom()){
@@ -153,33 +154,29 @@ class EventListener implements Listener {
     	 }else{
     	     $cevent->setMessage($event->getQuitMessage());
     	 }
-    	 $cevent->call();
+    	 $this->plugin->getServer()->getPluginManager()->callEvent($cevent);
     	 $event->setQuitMessage($cevent->getMessage());
     }
     
     /**
-     * @param EntityTeleportEvent $event
+     * @param EntityLevelChangeEvent $event
      *
      * @priority HIGHEST
      */
-    public function onWorldChange(EntityTeleportEvent $event){
-    	if ($event->getFrom()->getWorld() === $event->getTo()->getWorld())
-		{
-			return;
-		}
+    public function onWorldChange(EntityLevelChangeEvent $event){
     	$entity = $event->getEntity();
     	//Check if the Entity is a Player
     	if($entity instanceof Player){
     		$player = $entity;
-    		$origin = $event->getFrom()->getWorld();
-    		$target = $event->getTo()->getWorld();
-    		$cevent = new CustomAlertsWorldChangeEvent($this->plugin, $player, $origin, $target);
+    		$origin = $event->getOrigin();
+    		$target = $event->getTarget();
+    		$cevent = new CustomAlertsWorldChangeEvent($player, $origin, $target);
     		if($this->plugin->isWorldChangeMessageEnabled()){
     			$cevent->setMessage($this->plugin->getWorldChangeMessage($player, $origin, $target));
     		}else{
     		    $cevent->setMessage("");
     		}
-    	    $cevent->call();
+    	    $this->plugin->getServer()->getPluginManager()->callEvent($cevent);
     		if($cevent->getMessage() != ""){
     			Server::getInstance()->broadcastMessage($cevent->getMessage());
     		}
@@ -196,7 +193,7 @@ class EventListener implements Listener {
     	$player = $event->getEntity();
     	if($player instanceof Player){
     	    $cause = $player->getLastDamageCause();
-    	    $cevent = new CustomAlertsDeathEvent($this->plugin, $player, $cause);
+    	    $cevent = new CustomAlertsDeathEvent($player, $cause);
     		if($this->plugin->isDeathMessageHidden($cause)){
     			$cevent->setMessage("");
     		}else if($this->plugin->isDeathMessageCustom($cause)){
@@ -204,7 +201,7 @@ class EventListener implements Listener {
     		}else{
     		    $cevent->setMessage($event->getDeathMessage());
     		}
-    	    $cevent->call();
+    	    $this->plugin->getServer()->getPluginManager()->callEvent($cevent);
     		$event->setDeathMessage($cevent->getMessage());
     	}
     }

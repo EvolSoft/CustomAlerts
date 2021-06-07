@@ -10,20 +10,20 @@
 
 namespace CustomAlerts\Events;
 
-use pocketmine\player\Player;
+use pocketmine\player\PlayerInfo;
 use pocketmine\plugin\Plugin;
 
 class CustomAlertsOutdatedClientKickEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
-	/** @var Player $player */
+	/** @var PlayerInfo $player */
 	private $player;
 	
 	/**
-	 * @param Player $player
+	 * @param PlayerInfo $player
 	 */
-	public function __construct(Plugin $plugin, Player $player){
+	public function __construct(Plugin $plugin, PlayerInfo $player){
 		parent::__construct($plugin);
 		$this->player = $player;
 	}
@@ -31,9 +31,9 @@ class CustomAlertsOutdatedClientKickEvent extends CustomAlertsEvent {
 	/**
 	 * Get outdated client kick event player
 	 * 
-	 * @return Player
+	 * @return PlayerInfo
 	 */
-	public function getPlayer() : Player {
+	public function getPlayer() : PlayerInfo {
 		return $this->player;
 	}
 }

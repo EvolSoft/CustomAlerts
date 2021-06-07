@@ -13,13 +13,13 @@ namespace CustomAlerts\Events;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 
-class CustomAlertsOutdatedClientKickEvent extends CustomAlertsEvent {
+class CustomAlertsJoinEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
 	/** @var Player $player */
 	private $player;
-	
+
 	/**
 	 * @param Player $player
 	 */
@@ -29,7 +29,7 @@ class CustomAlertsOutdatedClientKickEvent extends CustomAlertsEvent {
 	}
 
 	/**
-	 * Get outdated client kick event player
+	 * Get join event player
 	 * 
 	 * @return Player
 	 */
