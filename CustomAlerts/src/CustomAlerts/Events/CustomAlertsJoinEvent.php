@@ -10,7 +10,7 @@
 
 namespace CustomAlerts\Events;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class CustomAlertsJoinEvent extends CustomAlertsEvent {
 	
