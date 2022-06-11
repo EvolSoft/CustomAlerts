@@ -21,7 +21,7 @@ class MotdTask extends Task {
       $this->plugin = $plugin;
     }
     
-    public function onRun($tick){
+    public function onRun() : void{
         CustomAlerts::getAPI()->updateMotd();
     }
 
