@@ -23,7 +23,7 @@ class CustomAlertsOutdatedServerKickEvent extends CustomAlertsEvent {
 	/**
 	 * @param NetworkSession $origin
 	 */
-	public function __construct(NetworkSession $origin){
+	public function __construct(?NetworkSession $origin){
 		$this->origin = $origin;
 	}
 
