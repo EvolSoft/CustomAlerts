@@ -10,28 +10,29 @@
 
 namespace CustomAlerts\Events;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
+use pocketmine\network\mcpe\NetworkSession;
 
 class CustomAlertsOutdatedServerKickEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
-	/** @var Player $player */
-	private $player;
+	/** @var NetworkSession $origin */
+	private $origin;
 	
 	/**
-	 * @param Player $player
+	 * @param NetworkSession $origin
 	 */
-	public function __construct(Player $player){
-		$this->player = $player;
+	public function __construct(?NetworkSession $origin){
+		$this->origin = $origin;
 	}
 
 	/**
 	 * Get outdated server kick event player
 	 * 
-	 * @return Player
+	 * @return NetworkSession
 	 */
-	public function getPlayer() : Player {
-		return $this->player;
+	public function getOrigin() : ?NetworkSession {
+		return $this->origin;
 	}
 }

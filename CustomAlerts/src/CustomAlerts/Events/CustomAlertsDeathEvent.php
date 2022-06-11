@@ -11,7 +11,7 @@
 namespace CustomAlerts\Events;
 
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class CustomAlertsDeathEvent extends CustomAlertsEvent {
 	
