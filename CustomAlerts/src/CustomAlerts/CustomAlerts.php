@@ -24,7 +24,6 @@ use pocketmine\command\PluginCommand;
 use pocketmine\entity\projectile\Projectile;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\ProjectileHitEntityEvent;
-use pocketmine\event\entity\ProjectileHitEvent;
 use pocketmine\player\Player as PlayerPlayer;
 use pocketmine\player\PlayerInfo;
 use pocketmine\world\World;
@@ -467,15 +466,13 @@ class CustomAlerts extends PluginBase {
                     break;
                 case EntityDamageEvent::CAUSE_PROJECTILE:
                     $message = $this->cfg["Death"]["death-projectile-message"]["message"];
-                    if($cause instanceof ProjectileHitEvent){
-                        if($cause instanceof ProjectileHitEntityEvent){
-                            $projectile = $cause->getEntity();
-                            if($projectile instanceof Projectile){
-                                $killer = $projectile->getOwningEntity();
-                                if($killer instanceof Living){
-                                    $array["KILLER"] = $killer->getName();
-                                    break;
-                                }
+                    if($cause instanceof ProjectileHitEntityEvent){
+                        $projectile = $cause->getEntity();
+                        if($projectile instanceof Projectile){
+                            $killer = $projectile->getOwningEntity();
+                            if($killer instanceof Living){
+                                $array["KILLER"] = $killer->getName();
+                                break;
                             }
                         }
                     }
