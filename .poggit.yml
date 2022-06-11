@@ -1,9 +1,7 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/EvolSoft/CustomAlerts
 branches:
-- master
+- PMMP-4
 projects:
   CustomAlerts:
     path: CustomAlerts/
-  CustomAlertsExample:
-    path: CustomAlertsExample/
 ...
