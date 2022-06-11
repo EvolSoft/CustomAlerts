@@ -343,7 +343,7 @@ class CustomAlerts extends PluginBase {
     /**
      * Check if death messages are custom
      * 
-     * @param EntityDeathEvent $cause
+     * @param EntityDamageEvent $cause
      *
      * @return bool
      */
