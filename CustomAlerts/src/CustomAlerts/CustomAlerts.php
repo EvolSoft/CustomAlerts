@@ -141,8 +141,6 @@ class CustomAlerts extends PluginBase {
     
     /**
      * Get outdated client message
-     * 
-     * @param Player
      *
      * @return string
      */
@@ -165,7 +163,6 @@ class CustomAlerts extends PluginBase {
     /**
      * Get outdated server message
      * 
-     * @param Player
      *
      * @return string
      */
@@ -188,7 +185,7 @@ class CustomAlerts extends PluginBase {
     /**
      * Get whitelist message
      * 
-     * @param Player
+     * @param PlayerInfo
      *
      * @return string
      */
