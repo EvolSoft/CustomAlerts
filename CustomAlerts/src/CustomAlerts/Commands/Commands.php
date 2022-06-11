@@ -20,8 +20,9 @@ use CustomAlerts\CustomAlerts;
 
 class Commands implements CommandExecutor{
 
-
-	public function __construct(CustomAlerts $plugin){
+    private $plugin;
+	
+    public function __construct(CustomAlerts $plugin){
        $this->plugin = $plugin;
     }
     
