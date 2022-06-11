@@ -344,7 +344,6 @@ class CustomAlerts extends PluginBase {
      * Check if death messages are custom
      * 
      *
-     * @return bool
      */
     public function isDeathMessageCustom(?EntityDamageEvent $cause = null){
         if(!$cause){
