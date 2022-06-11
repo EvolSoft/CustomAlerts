@@ -18,7 +18,8 @@ use pocketmine\utils\TextFormat;
 
 use CustomAlerts\CustomAlerts;
 
-class Commands extends PluginCommand implements CommandExecutor {
+class Commands implements CommandExecutor{
+
 
 	public function __construct(CustomAlerts $plugin){
        $this->plugin = $plugin;
@@ -32,7 +33,7 @@ class Commands extends PluginCommand implements CommandExecutor {
 			        goto help;
 			    case "info":
 			        if($sender->hasPermission("customalerts.info")){
-			            $sender->sendMessage(TextFormat::colorize(CustomAlerts::PREFIX . "&aCustomAlerts &dv" . $this->plugin->getDescription()->getVersion() . "&a developed by &dEvolSoft"));
+			            $sender->sendMessage(TextFormat::colorize(CustomAlerts::PREFIX . "&aCustomAlerts &dv" . $this->plugin->getDescription()->getVersion() . "&a developed by &dEvolSoft §r§aand updated by §dKanekiLeChomeur "));
 			            $sender->sendMessage(TextFormat::colorize(CustomAlerts::PREFIX . "&aWebsite &d" . $this->plugin->getDescription()->getWebsite()));
 			            break;
 			        }
