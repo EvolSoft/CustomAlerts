@@ -184,14 +184,11 @@ class CustomAlerts extends PluginBase {
     
     /**
      * Get whitelist message
-     * 
-     * @param PlayerInfo
      *
      * @return string
      */
-    public function getWhitelistMessage(PlayerInfo $player){
+    public function getWhitelistMessage(){
         return TextFormat::colorize($this->replaceVars($this->cfg["WhitelistedServer"]["message"], array(
-            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
