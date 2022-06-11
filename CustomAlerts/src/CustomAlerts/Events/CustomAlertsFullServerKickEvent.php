@@ -10,28 +10,29 @@
 
 namespace CustomAlerts\Events;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
+use pocketmine\player\PlayerInfo;
 
 class CustomAlertsFullServerKickEvent extends CustomAlertsEvent {
 	
 	public static $handlerList = null;
 	
-	/** @var Player $player */
+	/** @var PlayerInfo $player */
 	private $player;
 	
 	/**
-	 * @param Player $player
+	 * @param PlayerInfo $player
 	 */
-	public function __construct(Player $player){
+	public function __construct(PlayerInfo $player){
 		$this->player = $player;
 	}
 
 	/**
 	 * Get full server kick event player
 	 * 
-	 * @return Player
+	 * @return PlayerInfo
 	 */
-	public function getPlayer() : Player {
+	public function getPlayerInfo() : PlayerInfo {
 		return $this->player;
 	}
 }
