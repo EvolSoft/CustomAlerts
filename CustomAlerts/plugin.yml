@@ -16,7 +16,6 @@ permissions:
   customalerts:
     default: op
     description: CustomAlerts permission tree.
-    children:
   customalerts.help:
     default: op
     description: let player read CustomAlerts commands help.
