@@ -19,6 +19,7 @@ use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\LoginPacket;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\player\Player;
+use pocketmine\event\server\QueryRegenerateEvent;
 use pocketmine\Server;
 use pocketmine\network\mcpe\NetworkSession;
 use CustomAlerts\Events\CustomAlertsDeathEvent;
@@ -73,6 +74,19 @@ class EventListener implements Listener {
     	            return;
     	        }
     	    }
+			if(count($this->plugin->getServer()->getOnlinePlayers()) <= $this->plugin->getServer()->getMaxPlayers() || count($this->plugin->getServer()->getOnlinePlayers()) - 1 < $this->plugin->getServer()->getMaxPlayers()){
+			$ev = new CustomAlertsFullServerKickEvent($origin);
+			
+			if($this->plugin->isFullServerMessageCustom()){
+				$ev->setMessage($this->plugin->getFullServerMessage());
+			}
+
+    		$cevent->call();
+    		if($cevent->getMessage() != ""){
+    			$origin->disconnect($cevent->getMessage());
+    			return;
+    		}
+			}
     	}
     }
     
@@ -97,16 +111,7 @@ class EventListener implements Listener {
     			}
     		}
     	}else{
-    		//Full Server Message
-    		$cevent = new CustomAlertsFullServerKickEvent($player);
-    		if($this->plugin->isFullServerMessageCustom()){
-    			$cevent->setMesssage($this->plugin->getFullServerMessage($player));
-    		}    		
-    		$cevent->call();
-    		if($cevent->getMessage() != ""){
-    			$event->setKickReason(PlayerPreLoginEvent::KICK_REASON_SERVER_FULL, $cevent->getMessage());
-    			return;
-    		}
+			
     	}
     }
     
