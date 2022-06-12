@@ -484,7 +484,7 @@ Event functions are:
 ###### Get NetworkSession:
 
 ```php
-Player getOrigin()
+NetworkSession getOrigin()
 ```
 **Description:**<br>
 Get event NetworkSession.<br>
@@ -542,7 +542,7 @@ Event functions are:
 ###### Get NetworkSession:
 
 ```php
-Player getOrigin()
+NetworkSession getOrigin()
 ```
 **Description:**<br>
 Get event NetworkSession.<br>
@@ -558,7 +558,7 @@ Event functions are:
 ###### Get NetworkSession:
 
 ```php
-Player getOrigin()
+NetworkSession getOrigin()
 ```
 **Description:**<br>
 Get event player.<br>
