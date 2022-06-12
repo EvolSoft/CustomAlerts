@@ -10,29 +10,28 @@
 
 namespace CustomAlerts\Events;
 
-use pocketmine\player\Player;
-use pocketmine\player\PlayerInfo;
+use pocketmine\network\mcpe\NetworkSession;
 
-class CustomAlertsFullServerKickEvent extends CustomAlertsEvent {
+class CustomAlertsFullServerKickEvent extends CustomAlertsEvent{
 	
 	public static $handlerList = null;
 	
-	/** @var PlayerInfo $player */
-	private $player;
+	/** @var NetworkSession $origin */
+	private $origin;
 	
 	/**
-	 * @param PlayerInfo $player
+	 * @param NetworkSession $origin
 	 */
-	public function __construct(PlayerInfo $player){
-		$this->player = $player;
+	public function __construct(NetworkSession $origin){
+		$this->origin = $origin;
 	}
 
 	/**
 	 * Get full server kick event player
 	 * 
-	 * @return PlayerInfo
+	 * @return NetworkSession
 	 */
-	public function getPlayerInfo() : PlayerInfo {
-		return $this->player;
+	public function getPlayerInfo() : NetworkSession {
+		return $this->origin;
 	}
 }
