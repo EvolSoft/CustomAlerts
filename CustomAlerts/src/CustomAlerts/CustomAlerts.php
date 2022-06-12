@@ -214,9 +214,8 @@ class CustomAlerts extends PluginBase {
      *
      * @return string
      */
-    public function getFullServerMessage(PlayerInfo $player){
+    public function getFullServerMessage(){
         return TextFormat::colorize($this->replaceVars($this->cfg["FullServer"]["message"], array(
-            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
