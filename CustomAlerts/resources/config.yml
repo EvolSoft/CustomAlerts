@@ -15,7 +15,7 @@ WhitelistedServer:
   message: "&c&oThis Server is whitelisted!"
 FullServer:
   custom: true
-  message: "&e{PLAYER}&b, The Server is full &c[{TOTALPLAYERS}/{MAXPLAYERS}]&b!\n&l&dTry to join later :)"
+  message: "The Server is full &c[{TOTALPLAYERS}/{MAXPLAYERS}]&b!\n&l&dTry to join later :)"
 FirstJoin:
   enable: true
   message: "&2[{TIME}] &a{PLAYER}&d joined the game for the first time."
