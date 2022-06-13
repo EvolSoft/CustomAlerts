@@ -51,8 +51,7 @@ class CustomAlerts extends PluginBase {
     	@mkdir($this->getDataFolder());
     	$this->saveDefaultConfig();
     	$this->cfg = $this->getConfig()->getAll();
-        $tf = new PluginCommand("customalerts", $this, $this);
-        $tf->setExecutor(new Commands($this));
+        $this->getServer()->getCommandMap()->register("customalerts", new Commands($this));
     	$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     	$this->getScheduler()->scheduleRepeatingTask(new MotdTask($this), 20);
     }
