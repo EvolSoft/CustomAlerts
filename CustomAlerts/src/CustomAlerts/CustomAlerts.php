@@ -210,7 +210,6 @@ class CustomAlerts extends PluginBase {
     /**
      * Get full server message
      * 
-     * @param PlayerInfo $player
      *
      * @return string
      */
