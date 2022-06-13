@@ -83,7 +83,7 @@ class EventListener implements Listener {
 
     		$ev->call();
     		if($ev->getMessage() != ""){
-    			$origin->disconnect($cevent->getMessage());
+    			$origin->disconnect($ev->getMessage());
     			return;
     		}
 			}
