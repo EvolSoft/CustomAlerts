@@ -81,8 +81,8 @@ class EventListener implements Listener {
 				$ev->setMessage($this->plugin->getFullServerMessage());
 			}
 
-    		$cevent->call();
-    		if($cevent->getMessage() != ""){
+    		$ev->call();
+    		if($ev->getMessage() != ""){
     			$origin->disconnect($cevent->getMessage());
     			return;
     		}
