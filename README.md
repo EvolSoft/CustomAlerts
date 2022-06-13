@@ -41,7 +41,7 @@ In the ZIP file you will find:<br>
 
 **Commands:**
 
-***/customalerts*** *- CustomAlerts commands* ❗**(Temporarly not usable due to some unknow issues)**❗
+***/customalerts*** *- CustomAlerts commands*
 
 ## Donate
 
