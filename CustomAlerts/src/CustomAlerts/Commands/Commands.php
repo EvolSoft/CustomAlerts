@@ -59,7 +59,7 @@ Class Commands extends Command{
             }
         }else{
             if($sender->hasPermission("customalerts")){
-                $sender->sendMessage(TextFormat::colorize(CustomAlerts::PREFIX . "&cSubcommand &a" . $args[0] . " &cnot found. Use &a/calerts help &cto show available commands"));
+                $sender->sendMessage(TextFormat::colorize(CustomAlerts::PREFIX . "&cUse &a/calerts help &cto show available commands"));
             }else{
                 $sender->sendMessage(TextFormat::colorize("&cYou don't have permissions to use this command"));	
             }
