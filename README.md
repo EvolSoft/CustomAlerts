@@ -12,13 +12,13 @@ PocketMine-MP plugins
 
 ## Requirements
 
-PocketMine-MP API 3.0.0
+PocketMine-MP API 4.0.0
 
 ## Overview
 
 **CustomAlerts** lets you customize or hide all PocketMine alerts (join/leave messages, whitelist messages, outdated server/client messages, etc...)
 
-**EvolSoft Website:** http://www.evolsoft.tk
+**EvolSoft Website:** *Downed*
 
 ***This Plugin uses the New API. You can't install it on old versions of PocketMine.***
 
@@ -32,6 +32,7 @@ With CustomAlerts you can customize or hide whitelist kick messages, outdated se
 - Customize Outdated Server/Client kick messages ***(from MCPE 0.11.0 BUILD 11)***
 - Customize Whitelist kick messages ***(from MCPE 0.11.0 BUILD 11)***
 - Customize Full Server kick messages ***(from MCPE 0.11.0 BUILD 11) [Please keep in mind that if you have VIP or additional slots on your server you MUST disable this feature from config]***
+- Customize Death messages ***(There a problem for the moment due to PocketMine-MP 4)***
 
 **What is included?**
 
@@ -45,12 +46,12 @@ In the ZIP file you will find:<br>
 
 ## Donate
 
-Please support the development of this plugin with a small donation by clicking [:dollar: here](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=flavius.c.1999@gmail.com&lc=US&item_name=www.evolsoft.tk&no_note=0&cn=&curency_code=EUR&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted). 
+Please support the development of this plugin with a small donation by clicking [:dollar: here](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=talalsatouri5@gmail.com&lc=US&item_name=KanekiLeChomeur&no_note=0&cn=&curency_code=EUR&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted). 
 Your small donation will help me paying web hosting, domains, buying programs (such as IDEs, debuggers, etc...) and new hardware to improve software development. Thank you :smile:
 
 ## Documentation
 
-**Text format (Available on PocketMine console and on MCPE v0.11.0 and later):**
+**Text format (Available on PocketMine console and on MCPE since v0.11.0):**
 
 **Colors:**
 
@@ -106,7 +107,6 @@ OutdatedClient:
   #Outdated Client message
   #Available Tags:
   # - {MAXPLAYERS}: Show the maximum number of players supported by the server
-  # - {PLAYER}: Show player name
   # - {TIME}: Show current time
   # - {TOTALPLAYERS}: Show the number of all online players
   message: "&cYour MCPE client is outdated!"
@@ -117,7 +117,6 @@ OutdatedServer:
   #Outdated Server message
   #Available Tags:
   # - {MAXPLAYERS}: Show the maximum number of players supported by the server
-  # - {PLAYER}: Show player name
   # - {TIME}: Show current time
   # - {TOTALPLAYERS}: Show the number of all online players
   message: "&cOops! Server outdated!"
@@ -128,7 +127,6 @@ WhitelistedServer:
   #Whitelisted Server message
   #Available Tags:
   # - {MAXPLAYERS}: Show the maximum number of players supported by the server
-  # - {PLAYER}: Show player name
   # - {TIME}: Show current time
   # - {TOTALPLAYERS}: Show the number of all online players
   message: "&c&oThis Server is whitelisted!"
@@ -138,7 +136,6 @@ FullServer:
   custom: true
   #Available Tags:
   # - {MAXPLAYERS}: Show the maximum number of players supported by the server
-  # - {PLAYER}: Show player name
   # - {TIME}: Show current time
   # - {TOTALPLAYERS}: Show the number of all online players
   message: "&e{PLAYER}&b, The Server is full &c[{TOTALPLAYERS}/{MAXPLAYERS}]&b!\n&l&dTry to join later :)"
@@ -369,7 +366,7 @@ Death:
 
 **Commands:**
 
-***/customalerts*** *- CustomAlerts commands*
+***/customalerts*** *- CustomAlerts commands* **Not usable for the moment**
 <br><br>
 **Permissions:**
 <br>
@@ -402,7 +399,7 @@ use CustomAlerts\Events\CustomAlertsJoinEvent;
 class Example extends PluginBase implements Listener {
 }
 ```
-*4. Check if CustomAlerts API is compatible (insert this code in onEnable() function)*
+*4. Check if CustomAlerts API is compatible (insert this code in onEnable():void function)*
 ```php
 if(CustomAlerts::getAPI()->getAPIVersion() == "(used API version)"){
             //API compatible
@@ -485,15 +482,15 @@ This event is handled when a player is kicked due to full server.
 
 Event functions are:
 
-###### Get Player:
+###### Get NetworkSession:
 
 ```php
-Player getPlayer()
+NetworkSession getOrigin()
 ```
 **Description:**<br>
-Get event player.<br>
+Get event NetworkSession.<br>
 **Return:**<br>
-The event player (instance of pocketmine\Player)
+The event NetworkSession (instance of pocketmine\Player)
 
 ###### CustomAlertsJoinEvent:
 
@@ -509,7 +506,7 @@ Player getPlayer()
 **Description:**<br>
 Get join event player.<br>
 **Return:**<br>
-The join event player (instance of pocketmine\Player)
+The join event player (instance of pocketmine\player\Player)
 
 ###### Get default PocketMine join message:
 
@@ -543,15 +540,15 @@ This event is handled when a player is kicked due to outdated client.
 
 Event functions are:
 
-###### Get Player:
+###### Get NetworkSession:
 
 ```php
-Player getPlayer()
+NetworkSession getOrigin()
 ```
 **Description:**<br>
-Get event player.<br>
+Get event NetworkSession.<br>
 **Return:**<br>
-The event player (instance of pocketmine\Player)
+The event NetworkSession (instance of pocketmine\network\mcpe\NetworkSession)
 
 ###### CustomAlertsOutdatedServerKickEvent:
 
@@ -559,15 +556,15 @@ This event is handled when a player is kicked due to outdated server.
 
 Event functions are:
 
-###### Get Player:
+###### Get NetworkSession:
 
 ```php
-Player getPlayer()
+NetworkSession getOrigin()
 ```
 **Description:**<br>
 Get event player.<br>
 **Return:**<br>
-The event player (instance of pocketmine\Player)
+The event NetworkSession (instance of pocketmine\network\mcpe\NetworkSession)
 
 ###### CustomAlertsQuitEvent:
 
@@ -583,7 +580,7 @@ Player getPlayer()
 **Description:**<br>
 Get quit event player.<br>
 **Return:**<br>
-The quit event player (instance of pocketmine\Player)
+The quit event player (instance of pocketmine\player\Player)
 
 ###### Get default PocketMine quit message:
 
@@ -604,12 +601,12 @@ Event functions are:
 ###### Get Player:
 
 ```php
-Player getPlayer()
+PlayerInfo getPlayerInfo()
 ```
 **Description:**<br>
 Get event player.<br>
 **Return:**<br>
-The event player (instance of pocketmine\Player)
+The event PlayerInfo (instance of pocketmine\player\PlayerInfo)
 
 ###### CustomAlertsWorldChangeEvent:
 
@@ -625,27 +622,27 @@ Player getPlayer()
 **Description:**<br>
 Get world change event player.<br>
 **Return:**<br>
-The world change event player (instance of pocketmine\Player)
+The world change event player (instance of pocketmine\player\Player)
 
-###### Get Origin Level:
-
-```php
-Level getOrigin()
-```
-**Description:**<br>
-Get origin level.<br>
-**Return:**<br>
-The origin level (instance of pocketmine\Level)
-
-###### Get Target Level:
+###### Get Origin World:
 
 ```php
-Level getTarget()
+World getFrom()
 ```
 **Description:**<br>
-Get target level.<br>
+Get origin world.<br>
 **Return:**<br>
-The target level (instance of pocketmine\Level)
+The origin world (instance of pocketmine\world\World)
+
+###### Get Target World:
+
+```php
+World getTarget()
+```
+**Description:**<br>
+Get target world.<br>
+**Return:**<br>
+The target world (instance of pocketmine\world\World)
 
 **CustomAlerts API Functions:**
 
@@ -696,12 +693,11 @@ Check if outdated client message is custom.<br>
 
 ###### Get outdated client message:
 ```php
-string getOutdatedClientMessage(Player $player)
+string getOutdatedClientMessage()
 ```
 **Description:**<br>
 Get outdated client message.<br>
 **Parameters:**<br>
-*$player* the current player<br>
 **Return:**<br>
 *string*
 
@@ -716,12 +712,11 @@ Check if outdated server message is custom.<br>
 
 ###### Get outdated server message:
 ```php
-string getOutdatedServerMessage(Player $player)
+string getOutdatedServerMessage()
 ```
 **Description:**<br>
 Get outdated server message.<br>
 **Parameters:**<br>
-*$player* the current player<br>
 **Return:**<br>
 *string*
 
@@ -736,12 +731,11 @@ Check if whitelist message is custom.<br>
 
 ###### Get whitelist message:
 ```php
-string getWhitelistMessage(Player $player)
+string getWhitelistMessage()
 ```
 **Description:**<br>
 Get whitelist message.<br>
 **Parameters:**<br>
-*$player* the current player<br>
 **Return:**<br>
 *string*
 
@@ -756,7 +750,7 @@ Check if full server message is custom.<br>
 
 ###### Get full server message:
 ```php
-string getFullServerMessage(Player $player)
+string getFullServerMessage()
 ```
 **Description:**<br>
 Get full server message.<br>
@@ -854,7 +848,7 @@ Check if world change message is enabled.<br>
 
 ###### Get world change message:
 ```php
-string getWorldChangeMessage(Player $player, Level $origin, Level $target)
+string getWorldChangeMessage(Player $player, World $origin, World $target)
 ```
 **Description:**<br>
 Get default world change message.<br>

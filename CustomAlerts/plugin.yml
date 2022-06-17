@@ -7,16 +7,10 @@ author: [EvolSoft, KanekiLeChomeur]
 description: Customize or hide alerts (join/leave messages, whitelist messages, outdated server/client messages, etc...) plugin
 website: https://github.com/KanekiLeChomeur/CustomAlerts/
 
-commands:
-  customalerts:
-    aliases: [calerts]
-    description: CustomAlerts commands.
-    permission: customalerts
 permissions:
   customalerts:
     default: op
     description: CustomAlerts permission tree.
-    children:
   customalerts.help:
     default: op
     description: let player read CustomAlerts commands help.

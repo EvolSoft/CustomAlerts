@@ -51,8 +51,7 @@ class CustomAlerts extends PluginBase {
     	@mkdir($this->getDataFolder());
     	$this->saveDefaultConfig();
     	$this->cfg = $this->getConfig()->getAll();
-        $tf = new PluginCommand("customalerts", $this, $this);
-        $tf->setExecutor(new Commands($this));
+        $this->getServer()->getCommandMap()->register("customalerts", new Commands($this));
     	$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     	$this->getScheduler()->scheduleRepeatingTask(new MotdTask($this), 20);
     }
@@ -210,13 +209,11 @@ class CustomAlerts extends PluginBase {
     /**
      * Get full server message
      * 
-     * @param PlayerInfo $player
      *
      * @return string
      */
-    public function getFullServerMessage(PlayerInfo $player){
+    public function getFullServerMessage(){
         return TextFormat::colorize($this->replaceVars($this->cfg["FullServer"]["message"], array(
-            "PLAYER" => $player->getUsername(),
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
