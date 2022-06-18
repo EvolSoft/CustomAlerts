@@ -74,7 +74,7 @@ class EventListener implements Listener {
     	            return;
     	        }
     	    }
-			if(count($this->plugin->getServer()->getOnlinePlayers()) <= $this->plugin->getServer()->getMaxPlayers() || count($this->plugin->getServer()->getOnlinePlayers()) - 1 < $this->plugin->getServer()->getMaxPlayers()){
+			if(count($this->plugin->getServer()->getOnlinePlayers()) >= $this->plugin->getServer()->getMaxPlayers() || count($this->plugin->getServer()->getOnlinePlayers()) - 1 > $this->plugin->getServer()->getMaxPlayers()){
 			$ev = new CustomAlertsFullServerKickEvent($origin);
 			
 			if($this->plugin->isFullServerMessageCustom()){
