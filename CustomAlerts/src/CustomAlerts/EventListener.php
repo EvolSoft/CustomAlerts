@@ -106,7 +106,7 @@ class EventListener implements Listener {
     			}
     			$cevent->call();
     			if($cevent->getMessage() != ""){
-    				$event->setKickReason(PlayerPreLoginEvent::KICK_REASON_SERVER_WHITELISTED, $cevent->getMessage());
+    				$event->setKickFlag(PlayerPreLoginEvent::KICK_FLAG_SERVER_WHITELISTED, $cevent->getMessage());
     				return;
     			}
     		}
