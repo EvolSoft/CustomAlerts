@@ -12,7 +12,7 @@ PocketMine-MP plugins
 
 ## Requirements
 
-PocketMine-MP API 4.0.0
+PocketMine-MP API 5.0.0
 
 ## Overview
 
