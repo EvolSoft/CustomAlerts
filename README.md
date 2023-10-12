@@ -24,6 +24,12 @@ PocketMine-MP API 5.0.0
 
 With CustomAlerts you can customize or hide whitelist kick messages, outdated server/client messages, join/leave messages, first join messages, death messages, world change messages... (read documentation)
 
+**Changelogs**
+
+- Applied PocketMine-MP API 5.0.0 changes
+- Bumped version from 2.4 to 3.1
+- Patched Config Reload Command
+
 **Features**
 
 - Customize or hide join, quit and death messages
