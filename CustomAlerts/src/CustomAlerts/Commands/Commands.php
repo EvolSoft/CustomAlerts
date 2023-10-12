@@ -43,7 +43,7 @@ Class Commands extends Command{
                 case "reload":
                     if($sender->hasPermission("customalerts.reload")){
 			            $this->plugin->reloadConfig();
-			            $this->plugin->cfg = $this->plugin->getConfig()->getAll();
+			            $this->plugin->reloadCfg();
 			            $sender->sendMessage(TextFormat::colorize(CustomAlerts::PREFIX . "&aConfiguration Reloaded."));
 			        }else{
 						$sender->sendMessage(TextFormat::colorize("&cYou don't have permissions to use this command"));
