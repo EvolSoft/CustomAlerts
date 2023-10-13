@@ -26,6 +26,7 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\ProjectileHitEntityEvent;
 use pocketmine\player\Player as PlayerPlayer;
 use pocketmine\player\PlayerInfo;
+use pocketmine\utils\Config;
 use pocketmine\world\World;
 
 class CustomAlerts extends PluginBase {
@@ -36,7 +37,7 @@ class CustomAlerts extends PluginBase {
 	/** @var string */
 	const API_VERSION = "2.0";
 	
-	private $cfg;
+	protected Config $cfg;
 	
 	/** @var CustomAlerts $instance */
 	private static $instance = null;
@@ -226,6 +227,10 @@ class CustomAlerts extends PluginBase {
      */
     public function isFirstJoinMessageEnabled() : bool {
     	return $this->cfg["FirstJoin"]["enable"];
+    }
+
+    public function reloadCfg(){
+        $this->cfg = $this->getConfig()->getAll();
     }
 
     /**

@@ -12,7 +12,7 @@ PocketMine-MP plugins
 
 ## Requirements
 
-PocketMine-MP API 4.0.0
+PocketMine-MP API 5.0.0
 
 ## Overview
 
@@ -23,6 +23,12 @@ PocketMine-MP API 4.0.0
 ***This Plugin uses the New API. You can't install it on old versions of PocketMine.***
 
 With CustomAlerts you can customize or hide whitelist kick messages, outdated server/client messages, join/leave messages, first join messages, death messages, world change messages... (read documentation)
+
+**Changelogs** 13/10/2023
+
+- Applied PocketMine-MP API 5.0.0 changes
+- Bumped version from 2.4 to 3.1
+- Patched Config Reload Command
 
 **Features**
 
