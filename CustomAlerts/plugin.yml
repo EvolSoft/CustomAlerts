@@ -5,7 +5,7 @@ api: [5.0.0]
 load: STARTUP
 author: [EvolSoft, KanekiLeChomeur]
 description: Customize or hide alerts (join/leave messages, whitelist messages, outdated server/client messages, etc...) plugin
-website: https://github.com/KanekiLeChomeur/CustomAlerts/
+website: https://github.com/EvolSoft/CustomAlerts/
 
 permissions:
   customalerts:
