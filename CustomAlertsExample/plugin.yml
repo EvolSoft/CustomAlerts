@@ -1,7 +1,7 @@
 name: CustomAlertsExample
 main: CustomAlertsExample\CustomAlertsExample
 version: 1.5
-api: [3.0.0]
+api: [5.0.0]
 depend: [CustomAlerts]
 load: STARTUP
 author: EvolSoft
